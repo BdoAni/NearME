@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% block title %}{{ tool.tool_name}} - Details{% endblock %}
+{% block body %}
+
+<h1>{{ tool.tool_name}}</h1>
+<p>
+    {{ tool.description }}
+</p>
+<p>{{ tool.price}}</p>
+
+<p> this page for users not for the tool owners</p>
+{% endblock %}

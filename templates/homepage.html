@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+{% block title %}NearME Home Page{% endblock %}
+{% block body %}
+<h1>Welcome to the home page!</h1>
+<a href="/tools">View all tools</a>
+
+<h3> this is going to be a nav bar</h3>
+<a href="/users">View all users</a> <br>
+
+<h2>Create an Account</h2>
+<form action="/users/new" method="POST">
+    <p>
+        First Name <input type="text" name="fname">
+    </p>
+    <p>
+        Last Name<input type="text" name="lname">
+    </p>
+    <p>
+        Email <input type="text" name="email">
+    </p>
+
+    <p>
+        Password <input type="password" name="password">
+    </p>
+    <p>
+        Your Addrress <input type="text" name="address">
+    </p>
+    <p>
+        <input type="submit">
+    </p>
+</form>
+
+<h2>Log In</h2>
+<form action="/login" method="POST">
+    <p>
+        Email <input type="text" name="email">
+    </p>
+
+    <p>
+        Password <input type="password" name="password">
+    </p>
+
+    <p>
+        <input type="submit">
+    </p>
+</form>
+
+
+{% endblock %}

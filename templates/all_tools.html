@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% block title %}NearME tool page{% endblock %}
+{% block body %}
+<h1>Welcome to the Tool Page!</h1>
+{% for tool in tools %}
+<div>
+    <a href="/tools/{{tool.tool_id}}">
+        {{tool.tool_name}} {{tool.description}} </a>
+    <p>{{tool.price}}$</p><br>
+</div>
+
+
+{% endfor %}
+{% endblock %}

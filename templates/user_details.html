@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ user.first_name }}'s Page{% endblock %}
+
+{% block body %}
+<h1>{{ user.first_name }} {{ user.last_name }} {{ user.email }}</h1>
+{% for tool in user.tools %}
+<div>
+    <p>{{tool.tool_name}}</p>
+    <p>{{tool.description}}</p>
+    <p>{{ tool.price}}</p>
+    <p>{{tool.tool_image}}</p>
+    <p>{{tool.user.reviews}}</p>
+</div>
+{% endfor%}
+<!-- {% for review in user.reviews %}
+         {{review.comment}}
+         <p>{{review.user.first_name}}  {{review.user.last_name}}</p>
+    {% endfor%} -->
+{% endblock %}

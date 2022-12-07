@@ -1,0 +1,67 @@
+<h1> Hello {{user.first_name}}! You did it! </h1>
+<p> I'm planning to have a user homepage with his tools and all information about is listings</p>
+
+<a href="/display">View</a>|
+<a href="/edit">Edit</a>|
+<a href="/accepted">Add to Cart</a>|
+<a href="/delete">Remove</a>
+<a class="bordered" href="/new">Create a tool</a>
+
+<label for="product">Choose an option:</label>
+<h3> Your Tools:
+
+    <!-- <section>
+        <form action="/search" method="post">
+
+            <input type="search" placeholder="What are you looking for?">
+            <button>Search</button>
+        </form>
+    </section> -->
+</h3>
+<table>
+    <thead>
+        <tr>
+            <th>tool Name</th>
+            <th>Description</th>
+            <th>Start Date| End Date</th>
+            <th>Posted by</th>
+            <th>Price per day</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for tool in user.tools %}
+        <tr>
+            <td><a href="/tools/{{tool.tool_id}}/edit">{{tool.tool_name}}</td></a>
+            <td>{{tool.description}}</td>
+            <td>{{tool.created_at }}| End Date: {{tool.updated_at}}</td>
+            <td> {{tool.user.first_name}}</td>
+            <td> {{tool.price}}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<h2>Create a Tool </h2>
+<form action="/tools/new" method="POST">
+    <p>
+        Tool Name<input type="text" name="name">
+    </p>
+    <p>
+        Description <input type="text" name="description"> </p>
+    <p>
+        Price<input type="int" name="price">
+    </p>
+    <p>
+        Start Date:<input input type="date" name="formstart_date">
+    </p>
+    <p>
+        End Date:<input input type="date" name="formend_date">
+    </p>
+    <p>
+        Add an image:<input type="image" width="48" height="48">
+    </p>
+    <p>
+        <input type="submit">
+    </p>
+    <a href="/"> Cancel </a>
+</form>
