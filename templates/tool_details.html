@@ -8,5 +8,32 @@
 </p>
 <p>{{ tool.price}}</p>
 
+{% if session.get('user_id') %}
+<h2>Rate this tool</h2>
+<form action="/tools/{{tool.tool_id}}/review" method="POST">
+    <p>
+        Rating:
+        <select name="rating">
+            <option value="">Select rating</option>
+            {% for num in range(6) %}
+            <option value="{{ num }}">{{ num }}</option>
+            {% endfor %}
+        </select>
+    </p>
+    <p>
+        Comment: <input type="text" name="comment">
+    </p>
+    <p>
+        Name: <input type="text" name="name"> 
+    </p>
+    <p>
+        Add Your media: <img src="" alt="" name="media"> 
+    </p>
+    <p>
+        <input type="submit">
+    </p>
+</form>
+{% endif %}
+
 <p> this page for users not for the tool owners</p>
 {% endblock %}

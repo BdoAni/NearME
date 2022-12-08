@@ -72,7 +72,7 @@ class Tool(db.Model):
     
     @classmethod
     def create(self, tool_name, description, price,  availability_start, availability_end, tool_image, user_id):
-        """Create and return a new movie."""
+        """Create and return a new tool."""
 
         return self(
             tool_name=tool_name,
@@ -135,7 +135,17 @@ class Reservation(db.Model):
         )
         return new_reservation
 
+    @classmethod
+    def all_reservations(self):
+        """Return all reservations."""
 
+        return self.query.all() 
+    @classmethod
+    def get_by_id(self, reservation_id):
+        """Return a reservation by primary key."""
+
+        return self.query.get(reservation_id)  
+    
 class Review(db.Model):
     """A tool reviews."""
 
@@ -158,6 +168,22 @@ class Review(db.Model):
     def __repr__(self):
         return f"<Review  review_id={self.review_id} review={self.review} user_id={self.user_id}>"
     
+    @classmethod
+    def create(self, user_id, tool_id,  name, rating, comment):
+        """Return all reservations."""
+
+        return self(user_id=user_id,
+                    tool_id=tool_id,
+                    # media=media,
+                    name=name,
+                    rating=rating,
+                    comment=comment
+                    ) 
+    @classmethod
+    def update(self, review_id, new_rating):
+        """ Update a rating given rating_id and the updated rating. """
+        rating = self.query.get(review_id)
+        rating.rating =new_rating
     
 class Media(db.Model):
     """A media for reviews."""
@@ -177,7 +203,11 @@ class Media(db.Model):
     def __repr__(self):
         return f"<Media media_id={self.media_id} tool_id={self.tool_id=} review_id={self.review_id}>"
     
-    
+    @classmethod
+    def get_by_id(self, media_id):
+        """Return a media by primary key."""
+
+        return self.query.get(media_id) 
     
 def connect_to_db(flask_app, db_uri="postgresql:///nearme", echo=True):
     flask_app.config["SQLALCHEMY_DATABASE_URI"] = db_uri

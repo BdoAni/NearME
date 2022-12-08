@@ -12,6 +12,12 @@
 </head>
 
 <body>
+    {% if "email" in session %}
+        <div>
+            {{session["email"]}}
+        </div>
+    {% endif %}
+
     {% for msg in get_flashed_messages() %}
     <p class="flash-msg">
       {{ msg }}

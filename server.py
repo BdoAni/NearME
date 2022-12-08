@@ -1,7 +1,7 @@
 """Server for tool lental app."""
 
 from flask import Flask, render_template, request, flash, session, redirect
-from model import connect_to_db, db, User, Tool, Review, Reservation
+from model import connect_to_db, db, User, Tool, Review, Reservation, Media
 from jinja2 import StrictUndefined
 
 
@@ -58,15 +58,22 @@ def process_login():
 
     email = request.form.get("email")
     password = request.form.get("password")
+    # print(" ******** email **************", email)
 
     user = User.get_by_email(email)
 
     if not user or user.password != password:
         flash("The email or password you entered was incorrect.")
-    else:
-        # Log in user by storing the user's email in session
-        session["user_id"] = user.user_id
-        flash(f"Welcome back, {user.first_name}!")
+        if "user_id" in session:
+            del session["user_id"]
+        return redirect("/")
+    
+    # print(" ******** user_id **************", user.user_id)
+    # Log in user by storing the user's email in session
+    session["user_id"] = user.user_id
+    session["email"] = email 
+    # print(" ******** email **************", email)
+    flash(f"Welcome back, {user.first_name}!")
 
     return redirect("/dashboard")
 
@@ -111,6 +118,42 @@ def show_tool(tool_id):
     return render_template("tool_details.html", tool=tool)
 
 
+
+# ///////////////////////////// Review for the tool /////
+@app.route("/tools/<tool_id>/review", methods=["POST"])
+def create_review(tool_id):
+    """Create a new rating for the tool."""
+    
+    if not "user_id" in session:
+        flash("You must log in to rate a movie.")
+        return redirect("/")
+    
+    user_id=session["user_id"]
+    # user=User.get_by_id(user_id)
+    
+    # tool =Tool.get_by_id(tool_id)
+    rating_score = request.form.get("rating")
+    comment = request.form.get("comment")
+    #  if comments came from the form as an empt. string we want to make them as a none 
+    if comment =="":
+        comment=None
+    # media = request.form.get("media")
+    name = request.form.get("name")
+    if name=="":
+        name=None
+    if not rating_score:
+        flash("Error: you didn't select a score for your rating.")
+    else:
+        rating = Review.create(user_id, tool_id,  name, int(rating_score), comment )
+        db.session.add(rating)
+        db.session.commit()
+
+        flash(f"You rated this tool{rating_score} out of 5.")
+
+    return redirect(f"/tools/{tool_id}")
+
+
+
 # /////////////////////////////////////////////////////////////////////////////////
 # creating a tool 
 @app.route("/tools/new", methods=["POST"])
@@ -147,6 +190,8 @@ def create_tool():
 # update or eddit a tool  get method
 @app.route('/tools/<tool_id>/edit')
 def edit_tool(tool_id):
+    
+    
     tool = Tool.get_by_id(tool_id)
     if not "user_id" in session:
         return redirect("/")
@@ -181,7 +226,11 @@ def edit_tool_by_id(tool_id):
     return redirect("/dashboard")
     
     
-    
+# ////////////////1. need delete the tool/////
+# /////////////// 2. need a create a reservation page and methods ///////
+# /////////////// 3. need to create a card where all accepted offers from you will be in that card/////
+# /////////////// 4. need to create a revie for each tool //////
+# /////////////// 5. logout////////////////////////////////////
     
     
     
