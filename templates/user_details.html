@@ -10,7 +10,11 @@
     <p>{{tool.description}}</p>
     <p>{{ tool.price}}</p>
     <p>{{tool.tool_image}}</p>
-    <p>{{tool.user.reviews}}</p>
+    {% for review in tool.reviews  %}
+    <div>
+            <p>{{review.user.first_name }}</p>
+    </div>
+        {% endfor %}
 </div>
 {% endfor%}
 <!-- {% for review in user.reviews %}

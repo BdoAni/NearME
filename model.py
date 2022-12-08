@@ -166,7 +166,7 @@ class Review(db.Model):
     
 
     def __repr__(self):
-        return f"<Review  review_id={self.review_id} review={self.review} user_id={self.user_id}>"
+        return f"<Review  review_id={self.review_id} review={self.rating} user_id={self.user_id}>"
     
     @classmethod
     def create(self, user_id, tool_id,  name, rating, comment):

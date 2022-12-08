@@ -51,7 +51,7 @@ def register_user():
     return redirect("/")
 
 # /Log in post method and need to redirect to the sesson user personal page with all his listing items 
-# /////////////////////////////////////////////////////////////////////////////////////////////
+# /////////////////////////////////////// LOGIN//////////////////////////////////////////////////////
 @app.route("/login", methods=["POST"])
 def process_login():
     """Process user login."""
@@ -64,9 +64,7 @@ def process_login():
 
     if not user or user.password != password:
         flash("The email or password you entered was incorrect.")
-        if "user_id" in session:
-            del session["user_id"]
-        return redirect("/")
+        return do_logout()
     
     # print(" ******** user_id **************", user.user_id)
     # Log in user by storing the user's email in session
@@ -76,6 +74,23 @@ def process_login():
     flash(f"Welcome back, {user.first_name}!")
 
     return redirect("/dashboard")
+
+
+# ////////////////////////////////////LOG OUT //////////////////////////
+@app.route('/logout')
+def logout():
+
+    return do_logout()
+
+
+def do_logout():
+    if "user_id" in session:
+        del session["user_id"]
+    if "email" in session:
+        del session["email"]
+    # session["_flashes"].clear()
+    return redirect('/')
+
 
 
 @app.route("/dashboard")
@@ -115,6 +130,7 @@ def show_tool(tool_id):
     
     tool=Tool.get_by_id(tool_id)
     
+    
     return render_template("tool_details.html", tool=tool)
 
 
@@ -148,7 +164,7 @@ def create_review(tool_id):
         db.session.add(rating)
         db.session.commit()
 
-        flash(f"You rated this tool{rating_score} out of 5.")
+        flash(f"You rated this tool-{rating_score} out of 5.")
 
     return redirect(f"/tools/{tool_id}")
 

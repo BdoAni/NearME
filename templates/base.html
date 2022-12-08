@@ -10,8 +10,13 @@
 
     {% block head %}{% endblock %}
 </head>
-
 <body>
+    <div>  
+        <a href="/dashboard">Home</a>
+        <a href="/users">View all users</a> <br>|  
+        <a href="/tools">Available Tools</a>|
+        <a href="/logout">Logout</a>
+    </div>
     {% if "email" in session %}
         <div>
             {{session["email"]}}
@@ -19,7 +24,7 @@
     {% endif %}
 
     {% for msg in get_flashed_messages() %}
-    <p class="flash-msg">
+    <p >
       {{ msg }}
     </p>
     {% endfor %}
