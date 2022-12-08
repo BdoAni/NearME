@@ -1,6 +1,9 @@
-<h1> Hello {{user.first_name}}! You are now edditing your tool detail information! </h1>
+{% extends 'base.html' %}
+{% block title %}NearME tool page{% endblock %}
+{% block body %}
+<h1> Hello {{user.first_name}}! You are now able to  editing your tool detail information! </h1>
 
-<h2>Create a Tool </h2>
+<h2>Editing a Tool </h2> 
 <form action="/tools/{{tool.tool_id}}/edit" method="POST">
     <p>
         Tool Name<input type="text" name="name" value="{{tool.tool_name}}">
@@ -22,5 +25,7 @@
     <p>
         <input type="submit">
     </p>
-    <a href="/"> Cancel </a> 
+    <a href="/"> Cancel </a> <br>
+    <a a href="/tools/delete/{{tool.tool_id}}">Delete</a>
 </form>
+{% endblock %}

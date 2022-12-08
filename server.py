@@ -51,7 +51,7 @@ def register_user():
     return redirect("/")
 
 # /Log in post method and need to redirect to the sesson user personal page with all his listing items 
-# /////////////////////////////////////// LOGIN//////////////////////////////////////////////////////
+# /////////////////////////////////////// LOGIN  //////////////////////////////////////////////////////
 @app.route("/login", methods=["POST"])
 def process_login():
     """Process user login."""
@@ -115,6 +115,7 @@ def show_user(user_id):
 
     return render_template("user_details.html", user=user)
 
+# ///////////////////////////////////// Getting All Tools /////////////////////////////
 @app.route("/tools")
 def all_tools():
     """View all tools."""
@@ -123,9 +124,9 @@ def all_tools():
 
     return render_template("all_tools.html", tools=tools)
 
-
+# ///////////////////////////////////// toola detail //////////////////////////////////////
 @app.route("/tools/<tool_id>")
-def show_tool(tool_id):
+def show_detail_tool(tool_id):
     """Show details on a particular tool."""
     
     tool=Tool.get_by_id(tool_id)
@@ -135,7 +136,7 @@ def show_tool(tool_id):
 
 
 
-# ///////////////////////////// Review for the tool /////
+# ///////////////////////////// Review for the tool ///////////////////////////
 @app.route("/tools/<tool_id>/review", methods=["POST"])
 def create_review(tool_id):
     """Create a new rating for the tool."""
@@ -170,7 +171,7 @@ def create_review(tool_id):
 
 
 
-# /////////////////////////////////////////////////////////////////////////////////
+# ///////////////////////////////////// Create a tool ///////////////////////////////////////
 # creating a tool 
 @app.route("/tools/new", methods=["POST"])
 def create_tool(): 
@@ -195,18 +196,18 @@ def create_tool():
     # print(f'++++++++++++{tool_name }, {description}, {price}, {availability_start}, {availability_end}, {tool_image}, {user_id}++++++++' )
     db.session.add(tool)
     db.session.commit()
-    if Tool.get_by_id(tool.tool_id):
+    
+    
+    if not Tool.get_by_id(tool.tool_id):
         flash("Cannot create a tool. Try again.")
 
     return redirect("/dashboard")
 
 
 
-# /////////////////////////////////////////////////////////////////////////////////
-# update or eddit a tool  get method
+# //////////////////////////////////////update  edit the tool  get method /////////////////////////////
 @app.route('/tools/<tool_id>/edit')
 def edit_tool(tool_id):
-    
     
     tool = Tool.get_by_id(tool_id)
     if not "user_id" in session:
@@ -217,8 +218,7 @@ def edit_tool(tool_id):
     return render_template("tool_ediit.html", tool=tool, user=user)  
 
   
-# /////////////////////////////////////////////////////////////////////////////////
-# update or eddit a tool  post method 
+# //////////////////////////////////// Edit Tool  POST/////////////////////////////////////////////
 @app.route('/tools/<tool_id>/edit', methods=["POST"])
 def edit_tool_by_id(tool_id):
     
@@ -242,11 +242,30 @@ def edit_tool_by_id(tool_id):
     return redirect("/dashboard")
     
     
-# ////////////////1. need delete the tool/////
+# ////////////////  delete the tool by id////////////////////////
+@app.route('/tools/delete/<tool_id>')
+def delete_tool_by_id(tool_id):
+     
+    # user_id=session["user_id"]
+    # user=User.get_by_id(user_id)
+    if not "user_id" in session:
+        return redirect("/")
+    
+    tool = Tool.get_by_id(tool_id)
+    try:
+        db.session.delete(tool)
+        db.session.commit()
+        return redirect("/dashboard")
+    except:
+          "There was a problem deleting that tool"
+    return render_template("tool_ediit.html", tool=tool) 
+
+
+
+
 # /////////////// 2. need a create a reservation page and methods ///////
 # /////////////// 3. need to create a card where all accepted offers from you will be in that card/////
-# /////////////// 4. need to create a revie for each tool //////
-# /////////////// 5. logout////////////////////////////////////
+# /////////////// 4. need to create a revie for each tool ////// Almost Done see line 139
     
     
     

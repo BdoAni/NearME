@@ -10,22 +10,27 @@
 
     {% block head %}{% endblock %}
 </head>
+
 <body>
-    <div>  
-        <a href="/dashboard">Home</a>
-        <a href="/users">View all users</a> <br>|  
+    <div>
+        <a href="/users">View all users</a> <br>|
         <a href="/tools">Available Tools</a>|
+        {% if "user_id" in session %}
+        <a href="/dashboard">Home</a>
         <a href="/logout">Logout</a>
+        {% else %}
+        <a href="/">Login</a>
+        {% endif %}
     </div>
-    {% if "email" in session %}
-        <div>
-            {{session["email"]}}
-        </div>
-    {% endif %}
+    <!-- {% if "email" in session %}
+    <div>
+        {{session["email"]}}
+    </div>
+    {% endif %} -->
 
     {% for msg in get_flashed_messages() %}
-    <p >
-      {{ msg }}
+    <p>
+        {{ msg }}
     </p>
     {% endfor %}
     {% block body %}
