@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% block head %}{% endblock %}
+{% block body %}
+
+{% for result in results %}
+<div>
+<h2> You searched for  </h2> 
+    <p>{{result.tool_name}}</p>
+    <p>{{result.description}}</p>
+    <p>{{result.price}}</p>
+   <a href="/users/{{result.user.user_id }}"><p>{{result.user.first_name}}</p></a> 
+    {% if session.get('user_id') %}
+    <a href="/reservation"> Reserve A tool</a>
+    {% else  %}
+    <a href="/login"> login Please to be able to Reserve</a>
+    {% endif %}
+</div>
+{% endfor%}
+
+{% endblock %}

@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+
+<h1> Hello {{user.first_name}}!Now you can create your tool! </h1>
+
+{% block body %}
+
+<h2>Create a Tool </h2>
+<form action="/tools/new" method="POST" enctype="multipart/form-data" >
+    <p>
+        Tool Name<input type="text" name="name">
+    </p>
+    <p>
+        Description <input type="text" name="description"> </p>
+    <p>
+        Price<input type="int" name="price">
+    </p>
+    <p>
+        Start Date:<input  type="date" name="formstart_date" pattern="mm/dd/yyyy" >
+    </p>
+    <p>
+        End Date:<input  type="date" name="formend_date"  pattern="mm/dd/yyyy"  >
+    </p>
+    <p>
+        Upload your img: <input type="file" id="file" name="file" ></p>
+    <p>
+        <input type="submit">
+    </p>
+    <a href="/"> Cancel </a>
+</form>
+
+
+Add an image:
+<!-- <form action="/post-form-data" method="POST" enctype="multipart/form-data">
+    <input type="submit">
+    <p><input type="file" name="my-file"></p>
+</form> -->
+{% endblock %}

@@ -1,6 +1,7 @@
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
 
+
 db = SQLAlchemy()
 
 class User(db.Model):
@@ -80,7 +81,7 @@ class Tool(db.Model):
             price=price,
             availability_start=availability_start,
             availability_end=availability_end,
-            tool_image='',
+            tool_image=tool_image,
             user_id=user_id
             )
     @classmethod

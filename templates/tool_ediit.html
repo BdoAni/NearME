@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-{% block title %}NearME tool page{% endblock %}
+{% block title %}NearME tool edit page{% endblock %}
 {% block body %}
 <h1> Hello {{user.first_name}}! You are now able to  editing your tool detail information! </h1>
 
@@ -14,18 +14,18 @@
         Price<input type="number" step="0.01" name="price" value="{{tool.price}}">
     </p>
     <p>
-        Start Date:<input input type="date" name="formstart_date" value="{{tool.availability_start}}">
+        Start Date:<input input type="date" pattern="mm/dd/yyyy"  name="formstart_date" value="{{tool.availability_start}}">
     </p>
     <p>
-        End Date:<input input type="date" name="formend_date" value="{{tool.availability_end}}">
+        End Date:<input input type="date" pattern="mm/dd/yyyy" name="formend_date" value="{{tool.availability_end}}" >
     </p>
     <p>
-        Add an image:<input type="image" width="48" height="48" value="{{tool.description}}">
+        Upload your img: <input type="file" id="file" name="file" >
     </p>
     <p>
         <input type="submit">
     </p>
-    <a href="/"> Cancel </a> <br>
+    <a href="/dashboard"> Cancel </a> <br>
     <a a href="/tools/delete/{{tool.tool_id}}">Delete</a>
 </form>
 {% endblock %}

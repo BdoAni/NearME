@@ -2,48 +2,19 @@
 {% block title %}NearME Home Page{% endblock %}
 {% block body %}
 <h1>Welcome to the home page!</h1>
-<a href="/tools">View all tools</a>
+<!-- <a href="/tools">View all tools</a>
 
 <h3> this is going to be a nav bar</h3>
-<a href="/users">View all users</a> <br>
+<a href="/users">View all users</a> <br> -->
 
-<h2>Create an Account</h2>
-<form action="/users/new" method="POST">
-    <p>
-        First Name <input type="text" name="fname">
-    </p>
-    <p>
-        Last Name<input type="text" name="lname">
-    </p>
-    <p>
-        Email <input type="text" name="email">
-    </p>
 
-    <p>
-        Password <input type="password" name="password">
-    </p>
-    <p>
-        Your Addrress <input type="text" name="address">
-    </p>
-    <p>
-        <input type="submit">
-    </p>
-</form>
+<!-- <form action="/search" >
+    <input type="text" name="searched" placeholder="What are you looking for?" required>
+    <input type="submit" value="Search">
+</form> -->
+<h3>need to get result back from the search bar and display on the page</h3> 
 
-<h2>Log In</h2>
-<form action="/login" method="POST">
-    <p>
-        Email <input type="text" name="email">
-    </p>
-
-    <p>
-        Password <input type="password" name="password">
-    </p>
-
-    <p>
-        <input type="submit">
-    </p>
-</form>
+<h1> A place holder for all available tools/offers</h1>
 
 
 {% endblock %}

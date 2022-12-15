@@ -2,13 +2,22 @@
 {% block title %}{{ tool.tool_name}} - Details{% endblock %}
 {% block body %}
 
-<h1>{{ tool.tool_name}}</h1>
+<h1> Item Name:{{ tool.tool_name}}</h1>
 <p>
-    {{ tool.description }}
+    Description: {{ tool.description }}
 </p>
-<p>{{ tool.price}}</p>
+<p>
+    Daily Price: {{ tool.price}}$
+</p>
+<p>
+    Location: {{tool.user.address}}</p>
+<p>
+    Posted by: {{tool.user.first_name}}
+</p>
+
 
 {% if session.get('user_id') %}
+
 <h2>Rate this tool</h2>
 <form action="/tools/{{tool.tool_id}}/review" method="POST">
     <p>
@@ -24,11 +33,33 @@
         Comment: <input type="text" name="comment">
     </p>
     <p>
-        Name: <input type="text" name="name"> 
+        Name: <input type="text" name="name">
     </p>
     <p>
-        Add Your media: <img src="" alt="" name="media"> 
+        Add Your media: <img src="" alt="" name="media">
     </p>
+    <p>
+        <input type="submit">
+    </p>
+</form>
+
+<h1>
+    Reserve a tool:
+</h1>
+
+<form action="/user/reservation/tool/{{tool.tool_id}}" method="POST">
+
+    <p>
+        Start Date:<input input type="date" name="start_date" >
+    </p>
+    <p>
+        End Date:<input input type="date" name="end_date" >
+    </p>
+    <!-- TO DO: need to fix type price -->
+    <input type="text" name="price" value="{{tool.price}}"  >
+    <!-- <p>
+        Your total is: <img src="" alt="" name="media">
+    </p> -->
     <p>
         <input type="submit">
     </p>
