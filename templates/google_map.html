@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+{% block title %}NearME GOOGLE MAO PAGE{% endblock %}
+
+{% block body %}
+<div id="map"></div>
+<script async src="https://maps.googleapis.com/maps/api/js?key={{GOOGLEMAP_KEY}}&callback=initMap&libraries=places,geometry&solution_channel=GMP_QB_locatorplus_v6_cABCDE" async defer></script>
+
+<script src="/static/js/googleMap.js"></script>
+
+{% endblock %}

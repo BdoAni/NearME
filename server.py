@@ -8,6 +8,7 @@ from datetime import date
 # from flask_ckeditor import CKEditor, CKEditorField
 import cloudinary.uploader
 import os
+import googlemaps 
 
 
 
@@ -19,6 +20,7 @@ app.secret_key = "super secret key"
 CLOUDINARY_KEY=os.environ['CLOUDINARY_KEY']
 CLOUDINARY_SECRET=os.environ['CLOUDINARY_SECRET']
 CLOUD_NAME="dqrjpc9gf"
+GOOGLEMAP_KEY=os.environ['GOOGLEMAP_KEY']
 
 
 @app.route('/')
@@ -26,6 +28,15 @@ def homepage():
     """View homepage."""
 
     return render_template('homepage.html')
+
+# ////////////////////////////////////////// GOOGLE MAP GET///////////////////////
+@app.route('/map')
+def google_map():
+    """View map page."""
+
+    return render_template('google_map.html', GOOGLEMAP_KEY=GOOGLEMAP_KEY)
+
+
 
 
 @app.route("/users")
@@ -147,8 +158,7 @@ def show_detail_tool(tool_id):
     
     return render_template("tool_details.html", tool=tool)
 
-# ////TODO ask Adam regarding the api keys 
-# ////TODO Create a javascript page und enable update function for reviews 
+
 # /// TODO Create ADD TO CARD and check out 
 
 # @app.route("/update_review", methods=["POST"])
@@ -263,7 +273,9 @@ def edit_tool_by_id(tool_id):
     price=request.form.get("price")
     availability_start=request.form.get("formstart_date")
     availability_end=request.form.get("formend_date")
-    tool_image=request.files.get("image")
+    print(f'********************THIS IS REQUEST>FILES---{request.files}')
+    tool_image=request.files.get("file")
+    print(f'********************THIS IS TOOL IMAGE---{tool_image}')
     
     tool.tool_name=tool_name
     tool.description=description

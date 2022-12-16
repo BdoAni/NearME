@@ -4,20 +4,20 @@
 <h1> Hello {{user.first_name}}! You are now able to  editing your tool detail information! </h1>
 
 <h2>Editing a Tool </h2> 
-<form action="/tools/{{tool.tool_id}}/edit" method="POST">
+<form action="/tools/{{tool.tool_id}}/edit" method="POST"  enctype="multipart/form-data">
     <p>
         Tool Name<input type="text" name="name" value="{{tool.tool_name}}">
     </p>
     <p>
         Description <input type="text" name="description" value="{{tool.description}}"> </p>
     <p>
-        Price<input type="number" step="0.01" name="price" value="{{tool.price}}">
+        Price<input type="number" min="1" step="0.01" name="price" value="{{tool.price}}">
     </p>
     <p>
-        Start Date:<input input type="date" pattern="mm/dd/yyyy"  name="formstart_date" value="{{tool.availability_start}}">
+        Start Date:<input  type="date" pattern="mm/dd/yyyy"  name="formstart_date" value="{{tool.availability_start}}">
     </p>
     <p>
-        End Date:<input input type="date" pattern="mm/dd/yyyy" name="formend_date" value="{{tool.availability_end}}" >
+        End Date:<input  type="date" pattern="mm/dd/yyyy" name="formend_date" value="{{tool.availability_end}}" >
     </p>
     <p>
         Upload your img: <input type="file" id="file" name="file" >
