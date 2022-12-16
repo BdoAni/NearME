@@ -9,17 +9,38 @@
 
 let map, infoWindow;
 
-function showToolsOnMap() {
-  map = new google.maps.Map(document.getElementById("map"), {
-    center: { lat: 47.6062, lng: -122.335167 },
-    zoom: 8,
-    mapTypeControl: false,
-  });
-  
 
-  
+function showToolsOnMap() {
+    if ( !navigator.geolocation) {
+        console.error('You mast turn on your location ');
+    }
+    navigator.geolocation.getCurrentPosition((position) => {
+        const userLocation = {
+            lat: position.coords.latitude,
+            lng: position.coords.longitude,
+        };
+        map = new google.maps.Map(document.getElementById("map"), {
+            center: userLocation,
+            zoom: 11,
+            mapTypeControl: false,
+        });
+        const searchToolName = document.querySelector("#search_tool_name").value;
+        // .then(())
+        fetch(`/search?searched=${searchToolName}`)
+        .then((toolResults) => toolResults.json())
+        .then((toolResults)=>{
+            console.log(toolResults);
+            // const geocoder = new google.maps.Geocoder();
+            // geocoder.geocode( { 'address': searchToolName })
+        })
+        // .then((result)=>{
+        //     console.log(result)
+        //     const location = result[0].geometry.location
+        //     console.log(location)
+        // })
+    })
 }
 
-
+document.querySelector('#search_tool_submit').addEventListener('click', showToolsOnMap)
 
 window.showToolsOnMap = showToolsOnMap;

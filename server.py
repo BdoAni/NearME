@@ -327,14 +327,19 @@ def searchtools():
     results=db.session.query(Tool).filter(
         Tool.tool_name.ilike("%{}%".format(search_term))
         ).all()
-    # print(f'****************** this is RESULTS {search_term}')
-    # print(f'****************** this is RESULTS {results}')
+
     
     results_list = []
     for result in results:
-        results_list.append({"tool_name":result.tool_name,"tool_id": result.tool_id, "tool_description":result.description, "tool_price":float(result.price)})
+        results_list.append({
+            "tool_name":result.tool_name,
+            "tool_id": result.tool_id,
+            "tool_description":result.description,
+            "tool_price":float(result.price),
+            "user_address":result.user.address
+            })
         # /// TODO add mor for search terms to be able get more information DONE 
-        # print(f'****************** this is RESULTS {results}')
+
     return jsonify(results_list)
 
 
