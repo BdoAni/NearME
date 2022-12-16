@@ -30,15 +30,28 @@ function showToolsOnMap() {
         .then((toolResults) => toolResults.json())
         .then((toolResults)=>{
             console.log(toolResults);
-            // const geocoder = new google.maps.Geocoder();
-            // geocoder.geocode( { 'address': searchToolName })
+            const geocoder = new google.maps.Geocoder();
+            for(let tool of toolResults){
+                createToolMarkerOnMap(map, tool, geocoder)
+            }
         })
-        // .then((result)=>{
-        //     console.log(result)
-        //     const location = result[0].geometry.location
-        //     console.log(location)
-        // })
     })
+};
+
+function createToolMarkerOnMap(map, tool, geocoder){
+    geocoder.geocode( { 'address': tool.user_address })
+    .then((result)=>{
+        const location = result.results[0].geometry.location
+        console.log(location)
+
+        new google.maps.Marker({
+            position: location,
+            map: map,
+            title: tool.tool_name
+        })
+    })
+
+
 }
 
 document.querySelector('#search_tool_submit').addEventListener('click', showToolsOnMap)
