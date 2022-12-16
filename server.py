@@ -128,7 +128,7 @@ def show_user_dashboard():
     
     user=User.get_by_id(user_id)
 
-    return render_template("user_dashboard.html", user=user)
+    return render_template("user_dashboard.html", user=user, GOOGLEMAP_KEY=GOOGLEMAP_KEY)
 
 #//////////////////////////// display all users ////////////////////
 @app.route("/users/<user_id>")

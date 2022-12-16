@@ -13,8 +13,8 @@
   html,
   body {
     height: 100%;
-    margin: 0;
-    padding: 0;
+    margin: 0 auto;
+    padding: 10px;
   }
   
   input[type=text] {

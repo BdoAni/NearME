@@ -29,15 +29,6 @@
         <a href="/login">Login</a>
         {% endif %}
     </div>
-    <div>
-        <form id="search_tools" action="/search">
-            <input id="search_tool_name" type="text" name="searched" placeholder="What are you looking for?" required>
-            <input type="submit" value="Search">
-        </form>
-        <div id="searched-result">
-
-        </div>
-    </div>
     {% for msg in get_flashed_messages() %}
     <p>
         {{ msg }}

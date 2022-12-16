@@ -1,8 +1,11 @@
 {% extends 'base.html' %}
-<h1> Hello {{user.first_name}}! You did it! </h1>
-<p> I'm planning to have a user homepage with his tools and all information about is listings</p>
+{% from 'search_tools.html' import search_tools %}
+
 
 {% block body %}
+<h1> Hello {{user.first_name}}! You did it! </h1>
+<p> I'm planning to have a user homepage with his tools and all information about is listings</p>
+{{ search_tools()}}
 <h2> Your Tools:</h2>
 <div>
     {% for tool in user.tools %}
@@ -14,4 +17,7 @@
     <p><img src="{{tool.tool_image}}"></p>
     {% endfor %}
 </div>
+<script async src="https://maps.googleapis.com/maps/api/js?key={{GOOGLEMAP_KEY}}&callback=showToolsOnMap&libraries=places,geometry&solution_channel=GMP_QB_locatorplus_v6_cABCDE" async defer></script>
+
+<script src="/static/js/googleMap.js"></script>
 {% endblock %}
