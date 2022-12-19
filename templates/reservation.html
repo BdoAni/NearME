@@ -5,26 +5,47 @@
 
 <h3> Hello {{user.first_name}}! These are all your Reserved Tools!</h3>
 
+{% if session.get('user_id')  %}
 <div id="reserved-tools">
     {% for res in reservations %}
     <div id="reservation-{{res.reservation_id}}">
         <h3>Item Name:</h3>
-        <p> {{res.tool.tool_name}}</p>
+        <p> {{res.tool.tool_name}}</p>  
         <h3>Description:</h3>
         <p> {{res.tool.description}}</p>
         <h3>Location:</h3>
         <p> {{res.tool.user.address}}</p>
         <h3>Posted by:</h3>
         <p> {{res.tool.user.first_name}}</p>
+        {% if res.start_date !=None and res.end_date !=None%}
         <h3>available days:</h3>
-        <p> {{res.tool.availability_start}}| {{res.tool.availability_end}}</p>
+        <p> {{res.start_date.strftime("%m/%d/%y")}}| {{res.end_date.strftime("%m/%d/%y")}}</p>
+        {% endif %}
+        <p>Total is: {{res.total}}</p>
         {% if res.tool.tool_image %}
         <p><img src="{{res.tool.tool_image }}"> {{res.tool.tool_image}}</p><br>
         {% endif %}
         <br>
         <button class="delete-reservation" value="{{res.reservation_id}}">Cnecele Reservation</button>
         <!-- <a href="/user/reservation/delete/{{res.reservation_id}}">Cencel Reservation</a> -->
+        <!-- <a class = "check-out" href="/checkout" value="{{res.reservation_id}}">Proceed to checkout </a > -->
+<!-- ////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
+<form action="/payment" method="POST">
+    {% set amount = (res.total * 100)%}
+    <script
+      src="https://checkout.stripe.com/checkout.js"
+      class="stripe-button"
+      data-key="pk_test_51IsWrSDCSJx1xfN2KRMslaOm7pQnj52LZJGEjDGqCF7ofdHSR4mbpUXmDXv9ntRds8kul4pPma49UCsqw84qlzgl00zEQLuYY2"
+      data-name={{res.tool.tool_name}}
+      data-description={{res.tool.description}}
+      data-amount={{amount}}
+      data-currency="usd">
+    </script>
+  </form>
+
+
         {% endfor %}
+        {% endif %}
     </div>
 </div>
 

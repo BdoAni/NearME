@@ -7,7 +7,7 @@
 // failed.", it means you probably did not give permission for the browser to
 // locate you.
 
-let map, infoWindow;
+let map;
 
 
 function showToolsOnMap() {

@@ -23,6 +23,7 @@
         <a href="/tools">Available Tools</a>|
         {% if "user_id" in session %}
         <a href="/dashboard">Home</a>
+        <a href="/reservation">Reservations</a>
         <a href="/logout">Logout</a>
         <a href="/tools/new"> Add tool</a>
         {% else %}
@@ -42,7 +43,7 @@
     {% endblock %}
 
     <script src="/static/js/delete.js"></script>
-    <script src="/static/js/search.js"></script>
+    <!-- <script src="/static/js/search.js"></script> -->
     <!-- <script src="/static/js/googleMapLocation.js"></script> -->
 
 </body>

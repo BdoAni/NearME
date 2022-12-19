@@ -5,6 +5,7 @@
 {% for tool in tools %}
 <div> 
     <h1> ALL TOOLS PAGE</h1>
+    
     <a href="/tools/{{tool.tool_id}}">
         {{tool.tool_name}} {{tool.description}} </a>
     <p>{{tool.price}}$</p><br>
@@ -15,7 +16,7 @@
     </div>
     {% endfor %}
 </div>
-{% if session.get('user_id') %}
+{% if session.get('user_id') != tool.user_id %}
 <a href="/tools/{{tool.tool_id}}"> Reserve A tool</a>
 {% endif %}
 {% endfor %}

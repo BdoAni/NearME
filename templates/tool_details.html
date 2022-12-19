@@ -1,5 +1,9 @@
 {% extends 'base.html' %}
 {% block title %}{{ tool.tool_name}} - Details{% endblock %}
+<!-- <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+<script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+<link rel="stylesheet" href="//code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+<link rel="stylesheet" href="/static/css/style.css"> -->
 {% block body %}
 
 <h1> Item Name:{{ tool.tool_name}}</h1>
@@ -15,19 +19,24 @@
     Posted by: {{tool.user.first_name}}
 </p>
 
-
-{% if session.get('user_id') %}
+{% if session.get('user_id') != tool.user_id %}
 
 <h2>Rate this tool</h2>
 <form action="/tools/{{tool.tool_id}}/review" method="POST">
     <p>
         Rating:
         <select name="rating">
-            <option value="">Select rating</option>
+            <option>Select rating</option>
             {% for num in range(6) %}
             <option value="{{ num }}">{{ num }}</option>
             {% endfor %}
         </select>
+        <!-- <option>Select rating</option></x-star-rating>
+        <x-star-rating  value="3" number="5">
+            {% for num in range(6) %}
+            <option value="{{ num }}">{{ num }}</option>
+            {% endfor %}
+         -->
     </p>
     <p>
         Comment: <input type="text" name="comment">
@@ -50,13 +59,13 @@
 <form action="/user/reservation/tool/{{tool.tool_id}}" method="POST">
 
     <p>
-        Start Date:<input  type="date" name="start_date" >
+        Start Date:<input type="date" name="start_date">
     </p>
     <p>
         End Date:<input type="date" name="end_date" >
     </p>
     <!-- TO DO: need to fix type price -->
-    <input type="text" name="price" value="{{tool.price}}"  >
+    <input type="text" name="price" value="{{tool.price}}">
     <!-- <p>
         Your total is: <img src="" alt="" name="media">
     </p> -->
@@ -65,6 +74,7 @@
     </p>
 </form>
 {% endif %}
+<!-- <script src="/static/js/starRating.js"></script> -->
 
-<p> this page for users not for the tool owners</p>
+
 {% endblock %}

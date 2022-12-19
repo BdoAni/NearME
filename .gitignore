@@ -5,7 +5,7 @@ __pycache__/
 secrets.sh 
 # C extensions
 *.so
-
+links.txt
 # Distribution / packaging
 .Python
 build/

@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Thanks for your order!</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+{% block body %}
+
+<body>
+    <section>
+        <p>
+            We appreciate your business! If you have any questions, please email
+            <a href="mailto:nearmebefree@gmail.com">nearmebefree@gmail.com</a>
+            {% for order in reservations %}
+            <p> you rented: {{order.tool.tool_name}} </p>
+            <p> your pick up Address is: {{order.tool.user.address}} </p>
+            {% endfor %}
+        </p>
+    </section>
+    <!-- <script> const addresses = {{addresses}};  </script> -->
+</body>
+{% endblock %}
+
+</html>

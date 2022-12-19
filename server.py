@@ -1,14 +1,16 @@
 """Server for tool lental app."""
 
-import math
 from flask import Flask, render_template, request, flash, session, redirect, url_for, jsonify
+import json
+import math
 from model import connect_to_db, db, User, Tool, Review, Reservation, Media
 from jinja2 import StrictUndefined
-from datetime import date
+from datetime import datetime, timedelta
 # from flask_ckeditor import CKEditor, CKEditorField
 import cloudinary.uploader
 import os
 import googlemaps 
+import stripe
 
 
 
@@ -21,6 +23,12 @@ CLOUDINARY_KEY=os.environ['CLOUDINARY_KEY']
 CLOUDINARY_SECRET=os.environ['CLOUDINARY_SECRET']
 CLOUD_NAME="dqrjpc9gf"
 GOOGLEMAP_KEY=os.environ['GOOGLEMAP_KEY']
+LOCAL_DOMAIN = 'http://localhost:5000/payment'
+stripe_keys = {
+'STRIPEPAYMENTS_KEY':os.environ['STRIPEPAYMENTS_KEY'],
+'ENDPOINTSECRET_KEY':os.environ['ENDPOINTSECRET_KEY']
+}
+stripe.api_key=os.environ['ENDPOINTSECRET_KEY']
 
 
 @app.route('/')
@@ -159,17 +167,6 @@ def show_detail_tool(tool_id):
     return render_template("tool_details.html", tool=tool)
 
 
-# /// TODO Create ADD TO CARD and check out 
-
-# @app.route("/update_review", methods=["POST"])
-# def update_rating():
-#     review_id = request.json["review_id"]
-#     updated_score = request.json["updated_score"]
-#     Review.update(review_id, updated_score)
-#     db.session.commit()
-
-#     return "Success"
-
 # ///////////////////////////// Review for the tool ///////////////////////////
 @app.route("/tools/<tool_id>/review", methods=["POST"])
 def create_review(tool_id):
@@ -273,9 +270,9 @@ def edit_tool_by_id(tool_id):
     price=request.form.get("price")
     availability_start=request.form.get("formstart_date")
     availability_end=request.form.get("formend_date")
-    print(f'********************THIS IS REQUEST>FILES---{request.files}')
+    # print(f'********************THIS IS REQUEST>FILES---{request.files}')
     tool_image=request.files.get("file")
-    print(f'********************THIS IS TOOL IMAGE---{tool_image}')
+    # print(f'********************THIS IS TOOL IMAGE---{tool_image}')
     
     tool.tool_name=tool_name
     tool.description=description
@@ -338,9 +335,9 @@ def searchtools():
             "tool_price":float(result.price),
             "user_address":result.user.address
             })
-        # /// TODO add mor for search terms to be able get more information DONE 
 
     return jsonify(results_list)
+
 
 
 # /////////////// reservation POST/////////////////
@@ -350,22 +347,22 @@ def create_tool_reservation(tool_id):
     if not "user_id" in session:
         return redirect("/")
     user_id=session["user_id"]
-    # print(f'**************** RESER POST--------- TOOL ID==={tool_id}')
-
-    # TODO reservation is not working correctly [ request.form.get((('end_date'-'start_date') + 1 ) * ('price')) ]
-    start_date = request.form.get("start_day")
-    end_date = request.form.get("end_day")
+    
+    start_date = datetime.strptime(request.form.get("start_date"), '%Y-%m-%d')
+    end_date = datetime.strptime(request.form.get("end_date"), '%Y-%m-%d')
     price = float(request.form.get("price"))
-    # TO DO get fix  total amount
-    # total =  float(request.form.get((int(float('end_date'))-int(float('start_date')) + 1 ) * int('price')))
-    # total =(math.floor((int('end_date')-int('start_date')).total_seconds()/float(86400)))
-    total=25
-    print(f'***************************** This is total {total}')
+    total=0
+    
+    number_of_days=(((end_date - start_date).days)+1)
+    
+    total = float(number_of_days * price)
+    # print(f'***************************** This is TOTAL---> {total}')
     
     reservation = Reservation.create(start_date, end_date, price, total, user_id, tool_id )
     db.session.add(reservation)
     db.session.commit()
     return redirect ('/reservation')
+
 
 # /////////////// reservation page and methods  Get/////////////////
 @app.route("/reservation")
@@ -375,14 +372,85 @@ def reservation_tools():
         return redirect("/")
     user_id=session["user_id"]
     user=User.get_by_id(user_id)
-    # print(f'**************** RESER GET--------- USER ID==={user_id}')
-    
-    # TODO add get all reserv for one user.
+
     reservations = Reservation.all_reservations()
+   
     
-    return render_template( 'reservation.html',  user=user, reservations=reservations)
+    return render_template( 'reservation.html',  user=user, reservations=user.reservations)
 
 
+
+
+# ///////////////////////////////////////// STRIPE \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+    
+# ////////////////////////////////////////////// Publishable key ///////////////////
+@app.route('/config')
+def get_publishable_key():
+    stripe_config = {'publicKey': stripe_keys['publishable_key']}
+    return jsonify(stripe_config)
+
+
+# /////////////////////////////////// Checkout /////////////////////////
+@app.route("/payment",  methods=["POST"])
+def payments_forms():
+    
+    if not "user_id" in session:
+        return redirect("/")
+    # user_id=session["user_id"]
+    # user=User.get_by_id(user_id)
+    # reservation = Reservation.all_reservations()
+
+    return redirect('/success' )
+# //////////////////////////////////////////////////////////////////////////
+@app.route("/success")
+def success_forms():
+    
+    if not "user_id" in session:
+        return redirect("/")
+    user_id=session["user_id"]
+    user=User.get_by_id(user_id)
+    # reservations = Reservation.all_reservations()
+    addresses=[]
+    for reservation in user.reservations:
+        addresses.append(reservation.tool.user.address)
+
+    return render_template('success.html', user=user,  reservations=user.reservations, addresses=addresses )
+
+# ////////////////////////////////////////////// POST CHECKOUT SESSION///////////////////////
+
+@app.route('/create-checkout-session', methods=['POST'])
+def create_checkout_session():
+    
+    if not "user_id" in session:
+        return redirect("/")
+    user_id=session["user_id"]
+    tools = Tool.all_tools()
+    try:
+        data = json.loads(request.data)
+    # get tool
+        tool_reservation_to_purchase=''
+        for tool in tools:
+            if tool['id'] == data['tool_id']:
+                tool_reservation_to_purchase=tool
+    # create new checkout session
+        checkout_session = stripe.checkout.Session.create(
+            line_items=[
+                 {
+                    'name': tool_reservation_to_purchase['user.tool_name'],
+                    'quantity': 1,
+                    'currency': 'USD',
+                    'amount': 9.99
+                }
+            ],
+            mode='payment',
+            success_url= LOCAL_DOMAIN + '/success.html',
+            cancel_url=  LOCAL_DOMAIN+ '/cancel.html',
+        )
+        return jsonify({'sessionId': checkout_session['id']})
+    except Exception as e:
+         return jsonify(error=str(e)), 403
+
+    # return redirect(checkout_session.url, code=303)
 
 
 # ////////////////  delete a reservation by id////////////////////////
@@ -400,13 +468,6 @@ def delete_reservation_by_id(reservation_id):
     except:
           
         return jsonify( {"message":"There was a problem deleting that reservation_id", 'reservation_id': reservation_id}) 
-
-# //// todo create card and add all reserved tools to that card 
-
-
-# /////////////// 3. need to create a card where all accepted offers from you will be in that card/////
-# /////////////// 4. need to create a revie for each tool ////// Almost Done see line 139 Done
-# //////////////////////// Need to create a search bar for a user to serch a spesific tool///// almost done
 
 
 def add_user_img_record(img_url):

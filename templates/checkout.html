@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% block title %}NearME checkout page{% endblock %}
+<html>
+
+<head>
+    <title>rent the tool</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+{% block body %}
+
+<body>
+    {% if session.get('user_id')  %}
+    <section>
+        {% for user in user.reservations %}
+        <form action="/create-checkout-session" method="POST">
+            <input  name="tool_name" value="{{user.tool.tool_name}}"/>
+            <input  name="amount" value="{{user.tool.price}}"/>
+            <input  name="currency" value="USD"/>
+            <input type="hidden" name="tool_name" value="{{user.tool.tool_name}}"/>
+            <button type="submit" id="checkout-button">Checkout</button>
+        </form>
+        {% endfor %}
+    </section>
+    {%  endif %}
+</body>
+<script src="https://polyfill.io/v3/polyfill.min.js?version=3.52.1&features=fetch"></script>
+<script src="https://js.stripe.com/v3/"></script>
+<script src="/static/js/checkout.js"></script>
+{% endblock %}
+
+</html>
