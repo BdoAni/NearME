@@ -11,6 +11,7 @@ import cloudinary.uploader
 import os
 import googlemaps 
 import stripe
+from html import escape, unescape
 
 
 
@@ -390,17 +391,30 @@ def get_publishable_key():
     return jsonify(stripe_config)
 
 
-# /////////////////////////////////// Checkout /////////////////////////
+# /////////////////////////////////// Checkout STRIPE /////////////////////////
 @app.route("/payment",  methods=["POST"])
 def payments_forms():
     
     if not "user_id" in session:
         return redirect("/")
+    customer = stripe.Customer.create(
+    email=request.form['stripeEmail'],
+    source=request.form['stripeToken'],
+    )
+    amount = request.form.get('amount').replace('.','')
+# TODO Change ammount to save in the stripe account __DONE
+    charge = stripe.Charge.create(
+        customer=customer.id,
+        description='',
+        amount=amount,
+        currency='usd',
+    )
+   
     # user_id=session["user_id"]
     # user=User.get_by_id(user_id)
     # reservation = Reservation.all_reservations()
 
-    return redirect('/success' )
+    return redirect('/success')
 # //////////////////////////////////////////////////////////////////////////
 @app.route("/success")
 def success_forms():
@@ -413,8 +427,10 @@ def success_forms():
     addresses=[]
     for reservation in user.reservations:
         addresses.append(reservation.tool.user.address)
+        
+        # addresses.append(escape(reservation.tool.user.address))
 
-    return render_template('success.html', user=user,  reservations=user.reservations, addresses=addresses )
+    return render_template('success.html', user=user,  reservations=user.reservations, addresses=addresses, GOOGLEMAP_KEY=GOOGLEMAP_KEY )
 
 # ////////////////////////////////////////////// POST CHECKOUT SESSION///////////////////////
 

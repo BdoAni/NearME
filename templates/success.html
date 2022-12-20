@@ -5,21 +5,34 @@
 <head>
     <title>Thanks for your order!</title>
     <link rel="stylesheet" href="style.css">
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
 </head>
 {% block body %}
 
 <body>
+    <div id="map"></div>
     <section>
         <p>
             We appreciate your business! If you have any questions, please email
             <a href="mailto:nearmebefree@gmail.com">nearmebefree@gmail.com</a>
             {% for order in reservations %}
-            <p> you rented: {{order.tool.tool_name}} </p>
-            <p> your pick up Address is: {{order.tool.user.address}} </p>
+            <p> you rented: {{order.tool.tool_name}} </p>                                   
+            <p> Your pck up day is: {{order.start_date.strftime("%m/%d/%y")}} </p>
+            <p>Your return day is:{{order.end_date.strftime("%m/%d/%y")}}</p>
+            <p>Your purchesd amount is: {{order.total}}</p>
+            <p>your pick up Address is:<a href="http://maps.google.com/maps?q={{order.tool.user.address}}">
+                    {{order.tool.user.address}} </a>
+            </p>
             {% endfor %}
         </p>
     </section>
-    <!-- <script> const addresses = {{addresses}};  </script> -->
+    <script type="text/javascript">
+            const toolAddresses = ({{addresses|tojson}});  
+    </script>
+    <script async
+        src="https://maps.googleapis.com/maps/api/js?key={{GOOGLEMAP_KEY}}&libraries=places,geometry&solution_channel=GMP_QB_locatorplus_v6_cABCDE"
+        async defer></script>
+    <script src="/static/js/tool_sharce.js"></script>
 </body>
 {% endblock %}
 

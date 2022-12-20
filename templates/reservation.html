@@ -23,7 +23,7 @@
         {% endif %}
         <p>Total is: {{res.total}}</p>
         {% if res.tool.tool_image %}
-        <p><img src="{{res.tool.tool_image }}"> {{res.tool.tool_image}}</p><br>
+        <p><img src="{{res.tool.tool_image }}"></p><br>
         {% endif %}
         <br>
         <button class="delete-reservation" value="{{res.reservation_id}}">Cnecele Reservation</button>
@@ -31,7 +31,8 @@
         <!-- <a class = "check-out" href="/checkout" value="{{res.reservation_id}}">Proceed to checkout </a > -->
 <!-- ////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
 <form action="/payment" method="POST">
-    {% set amount = (res.total * 100)%}
+    {% set amount = (res.total * 100) %}
+    <input type="hidden" name ="amount" value="{{amount/100}}">
     <script
       src="https://checkout.stripe.com/checkout.js"
       class="stripe-button"
@@ -41,9 +42,7 @@
       data-amount={{amount}}
       data-currency="usd">
     </script>
-  </form>
-
-
+</form>
         {% endfor %}
         {% endif %}
     </div>

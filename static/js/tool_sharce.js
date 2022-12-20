@@ -16,8 +16,8 @@ function showToolNavigation(addresses){
             mapTypeControl: false,
         });
         const geocoder = new google.maps.Geocoder();
-        for(let address of addresses){
-            createToolMarkerOnMap(map, address, geocoder)
+        for(let toolAddress of toolAddresses){
+            createToolMarkerOnMap(map, toolAddress, geocoder)
         }
     });
 }
@@ -35,3 +35,5 @@ function createToolMarkerOnMap(map, address, geocoder){
         })
     })
 }
+window.addEventListener('load', showToolNavigation)
+window.showToolNavigation = showToolNavigation;
