@@ -1,5 +1,6 @@
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
+import math
 
 
 db = SQLAlchemy()
@@ -96,9 +97,57 @@ class Tool(db.Model):
 
         return self.query.get(tool_id)   
     
+    
+    @classmethod
+    def get_review_by_tool(self, tool_id):
+        """this is getting reviews for tool by one user """
+        tool=self.get_by_id(tool_id)
+        reviews=tool.reviews
+        # num_five_star_ratings=db.session.query((reviews)).filter(Review.rating==5).count()
+        # # print(f'********************* PRINTING TOOL 5 STAR rating { num_five_star_ratings}')
+        # num_four_star_ratings=db.session.query((reviews)).filter(reviews.rating==4).count()
+        # # print(f'********************* PRINTING TOOL 4 STAR rating { num_four_star_ratings}')
+        # num_three_star_ratings=db.session.query((reviews)).filter(reviews.rating==3).count()
+        # # print(f'********************* PRINTING TOOL 3 STARs rating { num_three_star_ratings}')
+        # num_two_star_ratings=db.session.query((reviews)).filter(reviews.rating==2).count()
+        # num_one_star_ratings=db.session.query((reviews)).filter(reviews.rating==1).count()
+        # # print(f'********************* PRINTING TOOL 2 STARs rating { num_two_star_ratings}')
+        # # print(f'********************* PRINTING TOOL 1 STARs rating { num_one_star_ratings}')
+        # five_star=(5 * num_five_star_ratings)
+        # four_star=(4 * num_four_star_ratings )
+        # three_star=(3 * num_three_star_ratings)
+        # two_star=(2 * num_two_star_ratings)
+        # rating_stars=math.ceil((
+        #     five_star + four_star + 
+        #     three_star + two_star + 
+        #     num_one_star_ratings)/(num_five_star_ratings +
+        #                             num_four_star_ratings +
+        #                             num_three_star_ratings +
+        #                             num_two_star_ratings +
+        #                             num_one_star_ratings))        
+        # review_by_user= reviews.query.filter_by(user_id == user_id).first()
+        return (reviews)
+    
+    
+    
+    def get_avg_review_of_tool(self):
+        
+        star_sum=0
+        star_avg=None
+        for review in self.reviews:
+            star_sum += review.rating
+        if len(self.reviews) > 0:
+            # print(f'*************** THIS IS STAR SUM BEFORE { self.tool_name} ------>>{star_sum}')
+            star_avg=star_sum/len(self.reviews)
+        else:
+            star_avg=0
+        # print(f'*************** THIS IS STAR SUM FOR { self.tool_name} ------>>{star_avg}')
+            
+        return star_avg
+    
 class Reservation(db.Model):
     """A tool reservations."""
-#  do i need to ad a name for my user to the reservation table?
+#  do i need to ad a name for my user to the reservation table?=
     __tablename__ = "reservations"
 
     reservation_id = db.Column(db.Integer, autoincrement=True, primary_key=True) 
@@ -141,11 +190,18 @@ class Reservation(db.Model):
         """Return all reservations."""
 
         return self.query.all() 
+    
     @classmethod
     def get_by_id(self, reservation_id):
         """Return a reservation by primary key."""
 
         return self.query.get(reservation_id)  
+    
+    @classmethod
+    def get_reserved_days(self, reservation_id, user_id, start_day, end_day):
+        """Return a reservation by primary key."""
+
+        return self.query.get(reservation_id, user_id, start_day, end_day )  
     
 class Review(db.Model):
     """A tool reviews."""
@@ -185,6 +241,7 @@ class Review(db.Model):
         """ Update a rating given rating_id and the updated rating. """
         rating = self.query.get(review_id)
         rating.rating =new_rating
+        
     
 class Media(db.Model):
     """A media for reviews."""

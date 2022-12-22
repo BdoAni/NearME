@@ -1,5 +1,6 @@
 """Server for tool lental app."""
 
+import functools
 from flask import Flask, render_template, request, flash, session, redirect, url_for, jsonify
 import json
 import math
@@ -153,22 +154,73 @@ def show_user(user_id):
 def all_tools():
     """View all tools."""
 
-    tools= Tool.all_tools()
+    tools= Tool.all_tools() 
+    for tool in tools:
+        Tool.get_review_by_tool(tool.tool_id)
+    
+    num_five_star_ratings=db.session.query((Review.rating)).filter(Review.rating==5).count()
+    # print(f'********************* PRINTING TOOL 5 STAR rating { num_five_star_ratings}')
+    num_four_star_ratings=db.session.query((Review.rating)).filter(Review.rating==4).count()
+    # print(f'********************* PRINTING TOOL 4 STAR rating { num_four_star_ratings}')
+    num_three_star_ratings=db.session.query((Review.rating)).filter(Review.rating==3).count()
+    # print(f'********************* PRINTING TOOL 3 STARs rating { num_three_star_ratings}')
+    num_two_star_ratings=db.session.query((Review.rating)).filter(Review.rating==2).count()
+    num_one_star_ratings=db.session.query((Review.rating)).filter(Review.rating==1).count()
 
-    return render_template("all_tools.html", tools=tools)
+    five_star=(5 * num_five_star_ratings)
+    four_star=(4 * num_four_star_ratings )
+    three_star=(3 * num_three_star_ratings)
+    two_star=(2 * num_two_star_ratings)
+    rating_stars=((
+        five_star + four_star + 
+        three_star + two_star + 
+        num_one_star_ratings)/(num_five_star_ratings +
+                                  num_four_star_ratings +
+                                  num_three_star_ratings +
+                                  num_two_star_ratings +
+                                  num_one_star_ratings))
+    # print(f'********************* PRINTING RATING STARs { rating_stars}') 
+    # if rating_stars==5:
+    # print (f"this ****************** {tool.tool_name} has been rated: { rating_stars} ")
+    star_avg=Tool.get_avg_review_of_tool(tool)
+
+    return render_template("all_tools.html", tools=tools, rating_stars=rating_stars, star_avg=star_avg)
 
 # ///////////////////////////////////// tool detail //////////////////////////////////////
 @app.route("/tools/<tool_id>")
 def show_detail_tool(tool_id):
     """Show details on a particular tool."""
-    
+    # getting user_id from the session
+    user_id=session["user_id"]
     tool=Tool.get_by_id(tool_id)
-    
-    
+    # print(f'********************* PRINTING TOOL {tool}')
+    reviews=Tool.get_review_by_tool(tool_id)
+    num_five_star_ratings=db.session.query((Review.rating)).filter(Review.rating==5).count()
+    # print(f'********************* PRINTING TOOL 5 STAR rating { num_five_star_ratings}')
+    num_four_star_ratings=db.session.query((Review.rating)).filter(Review.rating==4).count()
+    # print(f'********************* PRINTING TOOL 4 STAR rating { num_four_star_ratings}')
+    num_three_star_ratings=db.session.query((Review.rating)).filter(Review.rating==3).count()
+    # print(f'********************* PRINTING TOOL 3 STARs rating { num_three_star_ratings}')
+    num_two_star_ratings=db.session.query((Review.rating)).filter(Review.rating==2).count()
+    num_one_star_ratings=db.session.query((Review.rating)).filter(Review.rating==1).count()
+    # print(f'********************* PRINTING TOOL 2 STARs rating { num_two_star_ratings}')
+    # print(f'********************* PRINTING TOOL 1 STARs rating { num_one_star_ratings}')
+    five_star=(5 * num_five_star_ratings)
+    four_star=(4 * num_four_star_ratings )
+    three_star=(3 * num_three_star_ratings)
+    two_star=(2 * num_two_star_ratings)
+    rating_stars=((
+        five_star + four_star + 
+        three_star + two_star + 
+        num_one_star_ratings)/(num_five_star_ratings +
+                                  num_four_star_ratings +
+                                  num_three_star_ratings +
+                                  num_two_star_ratings +
+                                  num_one_star_ratings))
     return render_template("tool_details.html", tool=tool)
 
 
-# ///////////////////////////// Review for the tool ///////////////////////////
+# ///////////////////////////// Review for the tool POST ///////////////////////////
 @app.route("/tools/<tool_id>/review", methods=["POST"])
 def create_review(tool_id):
     """Create a new rating for the tool."""
@@ -193,6 +245,8 @@ def create_review(tool_id):
         rating = Review.create(user_id, tool_id,  name, int(rating_score), comment )
         db.session.add(rating)
         db.session.commit()
+        
+        # days= Reservation.query.filter()
 
         flash(f"You rated this tool-{rating_score} out of 5.")
 
@@ -374,7 +428,7 @@ def reservation_tools():
     user_id=session["user_id"]
     user=User.get_by_id(user_id)
 
-    reservations = Reservation.all_reservations()
+    # reservations = Reservation.all_reservations()
    
     
     return render_template( 'reservation.html',  user=user, reservations=user.reservations)
@@ -382,7 +436,7 @@ def reservation_tools():
 
 
 
-# ///////////////////////////////////////// STRIPE \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+# /////////////////////////////////////////---> STRIPE <--- \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
     
 # ////////////////////////////////////////////// Publishable key ///////////////////
 @app.route('/config')
@@ -415,6 +469,7 @@ def payments_forms():
     # reservation = Reservation.all_reservations()
 
     return redirect('/success')
+
 # //////////////////////////////////////////////////////////////////////////
 @app.route("/success")
 def success_forms():
@@ -423,7 +478,7 @@ def success_forms():
         return redirect("/")
     user_id=session["user_id"]
     user=User.get_by_id(user_id)
-    # reservations = Reservation.all_reservations()
+
     addresses=[]
     for reservation in user.reservations:
         addresses.append(reservation.tool.user.address)

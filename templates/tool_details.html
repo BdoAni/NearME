@@ -2,8 +2,8 @@
 {% block title %}{{ tool.tool_name}} - Details{% endblock %}
 <!-- <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
 <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
-<link rel="stylesheet" href="//code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
-<link rel="stylesheet" href="/static/css/style.css"> -->
+<link rel="stylesheet" href="//code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css"> -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
 {% block body %}
 
 <h1> Item Name:{{ tool.tool_name}}</h1>
@@ -20,10 +20,26 @@
 </p>
 
 {% if session.get('user_id') != tool.user_id %}
-
 <h2>Rate this tool</h2>
 <form action="/tools/{{tool.tool_id}}/review" method="POST">
-    <p>
+    <div class="rate">
+
+        <input type="radio" id="star5" name="rating" value="5" />
+        <label for="star5" title="text">5 stars</label>
+        <input type="radio" id="star4" name="rating" value="4" />
+        <label for="star4" title="text">4 stars</label>
+        <input type="radio" id="star3" name="rating" value="3" />
+        <label for="star3" title="text">3 stars</label>
+        <input type="radio" id="star2" name="rating" value="2" />
+        <label for="star2" title="text">2 stars</label>
+        <input type="radio" id="star1" name="rating" value="1" />
+        <label for="star1" title="text">1 star</label>
+    </div>
+    <input class="post" type="text" name="comment" />
+    <button id="submit_review" type="submit" value="submit">Submit</button>
+</form>
+
+<!-- <p>
         Rating:
         <select name="rating">
             <option>Select rating</option>
@@ -31,12 +47,6 @@
             <option value="{{ num }}">{{ num }}</option>
             {% endfor %}
         </select>
-        <!-- <option>Select rating</option></x-star-rating>
-        <x-star-rating  value="3" number="5">
-            {% for num in range(6) %}
-            <option value="{{ num }}">{{ num }}</option>
-            {% endfor %}
-         -->
     </p>
     <p>
         Comment: <input type="text" name="comment">
@@ -49,32 +59,43 @@
     </p>
     <p>
         <input type="submit">
-    </p>
-</form>
+    </p> -->
+<!-- <script>
+    const btn = document.querySelector("submit_review");
+    const post = document.querySelector(".post");
+    btn.onclick = ()=>{
+      widget.style.display = "none";
+      post.style.display = "block";
+      editBtn.onclick = ()=>{
+        widget.style.display = "block";
+        post.style.display = "none";
+      }
+      return false;
+    }
+  </script> -->
+<div>
+    <h1>
+        Reserve a tool:
+    </h1>
 
-<h1>
-    Reserve a tool:
-</h1>
+    <form action="/user/reservation/tool/{{tool.tool_id}}" method="POST">
 
-<form action="/user/reservation/tool/{{tool.tool_id}}" method="POST">
-
-    <p>
-        Start Date:<input type="date" name="start_date">
-    </p>
-    <p>
-        End Date:<input type="date" name="end_date" >
-    </p>
-    <!-- TO DO: need to fix type price -->
-    <input type="text" name="price" value="{{tool.price}}">
-    <!-- <p>
+        <p>
+            Start Date:<input type="date" name="start_date">
+        </p>
+        <p>
+            End Date:<input type="date" name="end_date">
+        </p>
+        <!-- TO DO: need to fix type price -->
+        <input type="text" name="price" value="{{tool.price}}">
+        <!-- <p>
         Your total is: <img src="" alt="" name="media">
     </p> -->
-    <p>
-        <input type="submit">
-    </p>
-</form>
-{% endif %}
-<!-- <script src="/static/js/starRating.js"></script> -->
-
-
+        <p>
+            <input type="submit">
+        </p>
+    </form>
+    {% endif %}
+</div>
+<link rel="stylesheet" href="/static/css/review.css">
 {% endblock %}
