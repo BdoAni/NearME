@@ -12,7 +12,7 @@ function showToolNavigation(addresses) {
         };
         map = new google.maps.Map(document.getElementById('map'), {
             center: userLocation,
-            zoom: 11,
+            zoom: 12,
             mapTypeControl: false,
         });
         const geocoder = new google.maps.Geocoder();
@@ -30,12 +30,26 @@ function createToolMarkerOnMap(map, address, geocoder) {
             const location = result.results[0].geometry.location
             console.log(location)
             // making markers my changes suppose to go here: 
-            marker = new google.maps.Marker({
+           var marker = new google.maps.Marker({
                 position: location,
                 map: map,
                 title: address
-            })
-        })
+            });
+
+            const contentString = ` 
+            <p>  <a href="http://maps.google.com/maps?q=${address}" >${address} </a> </p>
+        `;
+            const infoWindow = new google.maps.InfoWindow({
+                content: contentString
+            });
+
+            marker.addListener('click', () => {
+                infoWindow.open({
+                    anchor: marker,
+                    map: map
+                });
+            });
+        });
 }
 
 function calcRoute() {
@@ -57,7 +71,7 @@ function calcRoute() {
             };
 
         })
-
+        
 }
 // // Allow each marker to have an info window
 // google.maps.event.addListener(marker, 'click', (function(marker, i) {
