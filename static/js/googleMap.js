@@ -49,13 +49,29 @@ function createToolMarkerOnMap(map, tool, geocoder){
             position: location,
             map: map,
             title: tool.tool_name
-        })
-    })
+        });
+
+        const contentString= ` 
+            <p> ${tool.user_address} </p>
+            <p><a href="/tools/${tool.tool_id}"> ${tool.tool_name} </a></p>
+            <p> \$${tool.tool_price} </p>
+        `;
+
+        const infoWindow=new google.maps.InfoWindow({
+            content: contentString
+        });
+
+
+        myMarker.addListener('click', ()=> {
+            infoWindow.open({
+                anchor: myMarker,
+                map: map
+            });
+        });
+    });
 }
 
-// google.maps.event.addListener(myMarker, 'click', function () {
-//     window.location.href = this.title;
-// });
+
 
 document.querySelector('#search_tool_submit').addEventListener('click', showToolsOnMap)
 

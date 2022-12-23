@@ -1,5 +1,5 @@
 'use strict'
-alert("you connected to js")
+// alert("you connected to js")
 
 function Register() {
     const [first_name, setFirst_name] = React.useState("");
