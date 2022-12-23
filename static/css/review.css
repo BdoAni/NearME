@@ -44,6 +44,13 @@
 .fa-star{
     color: #ffc700;
 }
+.reviews-container {
+    height: 300px;
+    overflow: auto;
+}
 .reviews li{
     list-style: none;
+        padding: 10px;
+        border-bottom: 1px solid #ddd;
+
 }

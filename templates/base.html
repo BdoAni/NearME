@@ -27,7 +27,8 @@
         <a href="/logout">Logout</a>
         <a href="/tools/new"> Add tool</a>
         {% else %}
-        <a href="/login">Login</a>
+        <a href="/login">Login/Register</a>
+
         {% endif %}
     </div>
     {% for msg in get_flashed_messages() %}
@@ -43,6 +44,7 @@
     {% endblock %}
 
     <script src="/static/js/delete.js"></script>
+    
     <link rel="stylesheet" href="/static/css/review.css">
     <!-- <script src="/static/js/search.js"></script> -->
     <!-- <script src="/static/js/googleMapLocation.js"></script> -->

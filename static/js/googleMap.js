@@ -37,6 +37,7 @@ function showToolsOnMap() {
         })
     })
 };
+// const title = document.createElement('a').setAttribute('href', `/tools/${tool_id}`)
 
 function createToolMarkerOnMap(map, tool, geocoder){
     geocoder.geocode( { 'address': tool.user_address })
@@ -44,15 +45,17 @@ function createToolMarkerOnMap(map, tool, geocoder){
         const location = result.results[0].geometry.location
         console.log(location)
 
-        new google.maps.Marker({
+        var myMarker=new google.maps.Marker({
             position: location,
             map: map,
             title: tool.tool_name
         })
     })
-
-
 }
+
+// google.maps.event.addListener(myMarker, 'click', function () {
+//     window.location.href = this.title;
+// });
 
 document.querySelector('#search_tool_submit').addEventListener('click', showToolsOnMap)
 

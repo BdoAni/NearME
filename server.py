@@ -82,6 +82,33 @@ def register_user():
     return redirect("/")
 
 
+# /////////////////////////////////////////Registter a new user React//////////////////////////////
+@app.route("/users/new/api", methods=["POST"])
+def register_user_in_react():
+    """Create a new user."""
+    
+    data=request.get_json()
+    first_name = data.get("first_name")
+    last_name = data.get("last_name")
+    email = data.get("email")
+    print(f'******************* PRINTING EMAIL {email}')
+    password = data.get("password")
+    address = data.get("address")
+
+    user = User.get_by_email(email)
+
+    result={}
+    if user:
+        result['status']="Cannot create an account with that email. Try again."
+    else:
+        user = User.create(first_name, last_name, email, password, address)
+        db.session.add(user)
+        db.session.commit()
+        result['status']="Account created! Please log in."
+
+    return jsonify(result)
+
+
 # /////////////////////////////////////// LOGIN  //////////////////////////////////////////////////////
 @app.route("/login")
 def login_page():
@@ -451,6 +478,7 @@ def payments_forms():
     
     if not "user_id" in session:
         return redirect("/")
+    
     customer = stripe.Customer.create(
     email=request.form['stripeEmail'],
     source=request.form['stripeToken'],
@@ -463,7 +491,6 @@ def payments_forms():
         amount=amount,
         currency='usd',
     )
-   
     # user_id=session["user_id"]
     # user=User.get_by_id(user_id)
     # reservation = Reservation.all_reservations()
@@ -484,6 +511,8 @@ def success_forms():
         addresses.append(reservation.tool.user.address)
         
         # addresses.append(escape(reservation.tool.user.address))
+        # session.clear()
+        # return 'Session cleared!'
 
     return render_template('success.html', user=user,  reservations=user.reservations, addresses=addresses, GOOGLEMAP_KEY=GOOGLEMAP_KEY )
 

@@ -15,6 +15,8 @@
         <p>
             We appreciate your business! If you have any questions, please email
             <a href="mailto:nearmebefree@gmail.com">nearmebefree@gmail.com</a>
+            <p>Your current order is:</p>
+            <p>{{ reservations[0].tool.tool_name }}</p>
             {% for order in reservations %}
             <p> you rented: {{order.tool.tool_name}} </p>                                   
             <p> Your pck up day is: {{order.start_date.strftime("%m/%d/%y")}} </p>

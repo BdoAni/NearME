@@ -13,7 +13,7 @@
     <p>{{tool.price}}$</p><br>
     <p><img src="{{tool.tool_image }}"></p>
     <div class="reviews">
-       <p> Avrage rating is: {{tool.get_avg_review_of_tool()}} ({{tool.reviews|length}})</p>
+       <p> Average rating is: {{tool.get_avg_review_of_tool()}} ({{tool.reviews|length}})</p>
         
     
     <ul>
@@ -29,17 +29,6 @@
     {% endfor %}
     </ul>
 
-
-
-
-
-       <!-- <div class="rate">
-       {% if tool.get_avg_review_of_tool() == 4.5  or tool.get_avg_review_of_tool() == 5 %}
-        
-
-        {% endif %}
-    </div> -->
-          
     </div>
 </div>
 {% if session.get('user_id') != tool.user_id %}
