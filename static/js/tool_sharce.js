@@ -1,5 +1,10 @@
 'use strict'
 
+let directionsRenderer;
+let geocoder;
+let directionsService;
+
+
 function showToolNavigation(addresses) {
     let map;
     if (!navigator.geolocation) {
@@ -15,11 +20,10 @@ function showToolNavigation(addresses) {
             zoom: 12,
             mapTypeControl: false,
         });
-        const geocoder = new google.maps.Geocoder();
+        geocoder = new google.maps.Geocoder();
         for (let toolAddress of toolAddresses) {
             createToolMarkerOnMap(map, toolAddress, geocoder)
         }
-        calcRoute()
     });
 }
 
@@ -44,66 +48,38 @@ function createToolMarkerOnMap(map, address, geocoder) {
             });
 
             marker.addListener('click', () => {
+                calcRoute(address, map)
                 infoWindow.open({
                     anchor: marker,
                     map: map
                 });
+
             });
         });
 }
 
-function calcRoute() {
-    const directionService = new google.maps.directionService();
-    const directionsRendere = new google.maps.directionsRendere();
-    var start = document.getElementById('from').value;
-    var end = document.getElementById('to').value;
+function calcRoute(address, map) {
+    console.log('calculating route')
+    directionsService = new google.maps.DirectionsService();
+    if (directionsRenderer){
+        directionsRenderer.setMap(null)
+    }
+    directionsRenderer = new google.maps.DirectionsRenderer();
+    directionsRenderer.setMap(map)
     var request = {
-        origin: start,
-        destination: end,
+        origin: userAddress,
+        destination: address,
         travelMode: "DRIVING",
+
     };
     directionsService
         .route(request)
         .then((response) => {
+            console.log('rendoring directions')
             directionsRenderer.setDirections(response);
-            const mapOptions = {
-                zoom: 7
-            };
-
         })
-        
 }
-// // Allow each marker to have an info window
-// google.maps.event.addListener(marker, 'click', (function(marker, i) {
-//     return function() {
-//         infoWindow.setContent(infoWindowContent[i][0]);
-//         infoWindow.open(map, marker);
-//         latit = marker.getPosition().lat();
-//         longit = marker.getPosition().lng();
-//         // console.log("lat: " + latit);
-//         // console.log("lng: " + longit);
-//     }
-// })(marker, i));
-// marker.addListener('click', function() {
-//     directionsService.route({
-//         // origin: document.getElementById('start').value,
-//         origin: myLatLng,
 
-//         // destination: marker.getPosition(),
-//         destination: {
-//             lat: latit,
-//             lng: longit
-//         },
-//         travelMode: 'DRIVING'
-//     }, function(response, status) {
-//         if (status === 'OK') {
-//             directionsDisplay.setDirections(response);
-//         } else {
-//             window.alert('Directions request failed due to ' + status);
-//         }
-//     });
-
-// });
 
 
 

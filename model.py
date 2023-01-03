@@ -28,6 +28,9 @@ class User(db.Model):
     def __repr__(self):
         return f"<User user_id={self.user_id} email={self.email}>"
     
+    
+
+    
     @classmethod
     def create(self, first_name, last_name,  email, password,address):
        """Create and return a new user."""

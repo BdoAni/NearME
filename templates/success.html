@@ -30,6 +30,7 @@
     </section>
     <script type="text/javascript">
             const toolAddresses = ({{addresses|tojson}});  
+            const userAddress = ({{ user.address|tojson}});  
     </script>
     <script async
         src="https://maps.googleapis.com/maps/api/js?key={{GOOGLEMAP_KEY}}&libraries=places,geometry&solution_channel=GMP_QB_locatorplus_v6_cABCDE"
