@@ -70,12 +70,13 @@ def register_user():
     email = request.form.get("email")
     password = request.form.get("password")
     address =request.form.get("address")
+    profile_image=request.files['file']
 
     user = User.get_by_email(email)
     if user:
         flash("Cannot create an account with that email. Try again.")
     else:
-        user = User.create(first_name, last_name, email, password, address)
+        user = User.create(first_name, last_name, email, password, address, profile_image)
         db.session.add(user)
         db.session.commit()
         flash("Account created! Please log in.")
@@ -88,13 +89,23 @@ def register_user():
 def register_user_in_react():
     """Create a new user."""
     
-    data=request.get_json()
+    data=request.form.to_dict()
     first_name = data.get("first_name")
     last_name = data.get("last_name")
     email = data.get("email")
-    print(f'******************* PRINTING EMAIL {email}')
     password = data.get("password")
     address = data.get("address")
+    print(f'******************* PRINTING request.files {request.files}')
+    
+    profile_image = request.files['file']  
+    print(f'******************* PRINTING profile_image {profile_image}')
+    result = cloudinary.uploader.upload(
+        file=profile_image,
+        api_key=CLOUDINARY_KEY,
+        api_secret=CLOUDINARY_SECRET,
+        cloud_name=CLOUD_NAME
+        )
+    profile_image = result['secure_url']
 
     user = User.get_by_email(email)
 
@@ -102,7 +113,7 @@ def register_user_in_react():
     if user:
         result['status']="Cannot create an account with that email. Try again."
     else:
-        user = User.create(first_name, last_name, email, password, address)
+        user = User.create(first_name, last_name, email, password, address, profile_image)
         db.session.add(user)
         db.session.commit()
         result['status']="Account created! Please log in."

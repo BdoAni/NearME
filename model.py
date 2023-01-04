@@ -32,10 +32,10 @@ class User(db.Model):
 
     
     @classmethod
-    def create(self, first_name, last_name,  email, password,address):
+    def create(self, first_name, last_name,  email, password,address, profile_image ):
        """Create and return a new user."""
 
-       return self( first_name=first_name, last_name=last_name,  email=email, password=password, address=address)
+       return self( first_name=first_name, last_name=last_name,  email=email, password=password, address=address, profile_image=profile_image )
     @classmethod
     def get_by_id(self, user_id):
         return self.query.get(user_id)

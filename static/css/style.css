@@ -91,3 +91,21 @@
     font-size: medium;
   }
 
+  /* /////////////////////////// Adding pop-up box for login and register  */
+
+  #registration-popup {
+      display: none;
+      /* Hide the pop-up by default */
+      position: fixed;
+      /* Position the pop-up in the center of the screen */
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      /* Add your own styles here */
+  }
+
+  #registration-popup:target {
+      display: block;
+      /* Show the pop-up when it is targeted */
+  }
+
