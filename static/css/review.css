@@ -54,3 +54,57 @@
         border-bottom: 1px solid #ddd;
 
 }
+
+:root {
+    --gradient: linear-gradient(to left top, #d1e7dd 10%, #41a15c 90%) !important;
+}
+
+body {
+    background: rgba(237, 239, 225, 0.963) !important;
+}
+
+.card {
+    /* width: 290px; */
+    /* height: 580px; */
+    background: rgb(26, 45, 45); 
+    border: 1px solid #4d4a4b;
+    color: rgba(243, 237, 237, 0.8);
+    margin-bottom: 2rem;
+}
+.card-body{
+    /* margin-top: 220px; */
+}
+
+.btn {
+    border: 3px solid;
+    border-image-slice: 1;
+    background: var(--gradient) !important;
+    -webkit-background-clip: text !important;
+    -webkit-text-fill-color: transparent !important;
+    border-image-source: var(--gradient) !important;
+    text-decoration: none;
+    transition: all .4s ease;
+}
+
+.btn:hover,
+.btn:focus {
+    background: var(--gradient) !important;
+    -webkit-background-clip: none !important;
+    -webkit-text-fill-color: rgb(125, 189, 172) !important;
+    border: 5px solid #fff !important;
+    /* box-shadow: rgb(25, 67, 10) 1px 0 10px;  */
+    box-shadow:#d1e7dd;
+    text-decoration: underline;
+}
+.navbar-brand{
+    width: 80px;
+    margin-right: 60%;
+}
+.card-img-top{
+    clip: rect(0, 290px, 216px, 0);
+    position: absolute;
+}
+.card-img-spacer{
+    width: 290px;
+    height: 216px;
+}

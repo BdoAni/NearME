@@ -1,47 +1,61 @@
 {% extends 'base.html' %}
 {% block title %}NearME all tools page{% endblock %}
+<!-- <link rel="stylesheet" href="/static/css/card.css"> -->
 
 
 {% block body %}
-<h1>Welcome to the Tool Page!</h1>
-{% for tool in tools %}
-<div class="tool_div">
-    <h1> ALL TOOLS PAGE</h1>
+<div class="container mx-auto mt-4">
+    <div class="container">
+        <div class="row">
+            {% for tool in tools %}
+            <div class="col-md-4">
+                <div class="card" style="width: 18rem;">
 
-    <a href="/tools/{{tool.tool_id}}">
-        {{tool.tool_name}} {{tool.description}} </a>
-    <p>{{tool.price}}$</p><br>
-    <p><img src="{{tool.tool_image }}"></p>
-    <div class="reviews">
-       <p> Average rating is: {{tool.get_avg_review_of_tool()}} ({{tool.reviews|length}})</p>
-        
-    
-    <ul>
-    {% for review in tool.reviews %}
-        <li>
-            {% for i in range(review.rating) %}
-                <i class="fa fa-star"></i>
-            {% endfor %}
-            {% if review.comment != None %}
-               {{ review.comment }}
-            {% endif %}
-        </li>
-    {% endfor %}
-    </ul>
+                    <a href="/tools/{{tool.tool_id}}"> 
+                        <img src="{{tool.tool_image }}" class="card-img-top" alt="tool_image" >
+                        <div class="card-img-spacer"></div>
+                    </a>
+                    <div class="card-body">
+                        <h5 class="card-title"><a href="/tools/{{tool.tool_id}}">
+                                {{tool.tool_name}}</a></h5>
+                        <h6  class="mb-0 font-weight-semibold" >{{tool.price}}$</h6>
+                        <p class="card-text">{{tool.description}}</p>
+                        {% if  tool.reviews %}
+                        <div class="reviews">
 
+                            <p> Average rating is: {{tool.get_avg_review_of_tool()}} <i class="fa fa-star"></i>
+                                ({{tool.reviews|length}}) &nbsp; </p>
+                            <ul>
+                                {% set review = tool.reviews[-1] %}
+                                <li>
+                                    {% for i in range(review.rating) %}
+                                    <i class="fa fa-star"></i>
+                                    {% endfor %}
+                                    {% if review.comment != None %}
+                                    {{ review.comment}}
+                                    {% endif %}
+                                </li>
+                            </ul>
+                        </div>
+                        {% endif %}
+                        {% if session.get('user_id') != tool.user_id %}
+                        <a href="/tools/{{tool.tool_id}}" class="btn mr-2"><i class="fa fa-shopping-cart"></i>
+                            Reserve</a>
+                        {% endif %}
+                        {% for reservation in tool.reservations %}
+                        {% if session.get('user_id') == reservation.user.user_id %}
+                        <!-- <div>
+                            <h3>You have rented this tool before!</h3>
+                        </div> -->
+                        {% endif %}
+                        {% endfor%}
+
+                    </div>
+                </div>
+            </div>
+            {% endfor%}
+        </div>
     </div>
 </div>
-{% if session.get('user_id') != tool.user_id %}
-<a href="/tools/{{tool.tool_id}}"> Reserve A tool</a>
-{% endif %}
-{% for reservation in tool.reservations %}
-    {% if session.get('user_id') == reservation.user.user_id  %}
-        <div>   
-            <h3>You have rented this tool before!</h3>
-        </div>
-    {% endif %}
-{% endfor%}
-{% endfor %}
-<link rel="stylesheet" href="/static/css/review.css">
 
 {% endblock %}

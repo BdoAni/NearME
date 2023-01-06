@@ -11,7 +11,7 @@
     Description: {{ tool.description }}
 </p>
 <p>
-    Daily Price: {{ tool.price}}$
+    Daily Price: {{ tool.price}}$ 
 </p>
 <p>
     Location: {{tool.user.address}}</p>
@@ -39,40 +39,6 @@
     <button id="submit_review" type="submit" value="submit">Submit</button>
 </form>
 
-<!-- <p>
-        Rating:
-        <select name="rating">
-            <option>Select rating</option>
-            {% for num in range(6) %}
-            <option value="{{ num }}">{{ num }}</option>
-            {% endfor %}
-        </select>
-    </p>
-    <p>
-        Comment: <input type="text" name="comment">
-    </p>
-    <p>
-        Name: <input type="text" name="name">
-    </p>
-    <p>
-        Add Your media: <img src="" alt="" name="media">
-    </p>
-    <p>
-        <input type="submit">
-    </p> -->
-<!-- <script>
-    const btn = document.querySelector("submit_review");
-    const post = document.querySelector(".post");
-    btn.onclick = ()=>{
-      widget.style.display = "none";
-      post.style.display = "block";
-      editBtn.onclick = ()=>{
-        widget.style.display = "block";
-        post.style.display = "none";
-      }
-      return false;
-    }
-  </script> -->
 <div>
     <h1>
         Reserve a tool:
@@ -86,11 +52,8 @@
         <p>
             End Date:<input type="date" name="end_date">
         </p>
-        <!-- TO DO: need to fix type price -->
         <input type="text" name="price" value="{{tool.price}}">
-        <!-- <p>
-        Your total is: <img src="" alt="" name="media">
-    </p> -->
+ 
         <p>
             <input type="submit">
         </p>

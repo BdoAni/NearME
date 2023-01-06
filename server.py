@@ -187,6 +187,8 @@ def show_user(user_id):
     user=User.get_by_id(user_id)
 
     return render_template("user_details.html", user=user)
+# ////////////////////////// display one user with all information ////
+
 
 # ///////////////////////////////////// Getting All Tools /////////////////////////////
 @app.route("/tools")
