@@ -5,25 +5,34 @@
 <link rel="stylesheet" href="//code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css"> -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
 {% block body %}
-
-<h1> Item Name:{{ tool.tool_name}}</h1>
+<h5> {{ tool.tool_name}}</h5>
+<div class="tool-details">
+<img src="{{tool.tool_image }}" />
+</div>
+<div class="tool-details">
 <p>
     Description: {{ tool.description }}
 </p>
+
 <p>
     Daily Price: {{ tool.price}}$ 
 </p>
 <p>
-    Location: {{tool.user.address}}</p>
-<p>
-    Posted by: {{tool.user.first_name}}
+    Location: 
+    <a href="http://maps.google.com/maps?q={{tool.user.address}}"> {{tool.user.address}} </a>
 </p>
+<p>
+    <!--  need to link to the tool owner page with alll his listings  -->
+    Posted by: <a href="/users/{{tool.user.user_id}}" >{{tool.user.first_name}}</a>
+</p>
+<h6>Available Dates:</h6>{{tool.availability_start.strftime("%m/%d/%y") }} | {{tool.availability_end.strftime("%m/%d/%y")}}
+</div>
+
 
 {% if session.get('user_id') != tool.user_id %}
 <h2>Rate this tool</h2>
 <form action="/tools/{{tool.tool_id}}/review" method="POST">
     <div class="rate">
-
         <input type="radio" id="star5" name="rating" value="5" />
         <label for="star5" title="text">5 stars</label>
         <input type="radio" id="star4" name="rating" value="4" />

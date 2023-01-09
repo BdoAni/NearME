@@ -9,11 +9,12 @@
     <p>{{tool.tool_name}}</p>
     <p>{{tool.description}}</p>
     <p>{{ tool.price}}</p>
-    <p>{{tool.tool_image}}</p>
+    <!-- <p>{{tool.tool_image}}</p> -->
     <p> <img src="{{tool.tool_image}}" /></p>
     {% for review in tool.reviews  %}
     <div>
             <p>{{review.user.first_name }}</p>
+            
     </div>
         {% endfor %}
 </div>

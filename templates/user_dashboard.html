@@ -3,19 +3,60 @@
 
 
 {% block body %}
-<h1> Hello {{user.first_name}}! You did it! </h1>
-<p> I'm planning to have a user homepage with his tools and all information about is listings</p>
+<h1> Hello {{user.first_name}}! </h1>
+<div class="user-dashboard-map-card">
 {{ search_tools()}}
-<h2> Your Tools:</h2>
-<div>
-    {% for tool in user.tools %}
-    <h3>tool Name:</h3><a href="/tools/{{tool.tool_id}}/edit">{{tool.tool_name}}</a>
-    <h3>Description:</h3>{{tool.description}}
-    <h3>Start Date| End Date:</h3>{{tool.availability_start.strftime("%m/%d/%y") }}| {{tool.availability_end.strftime("%m/%d/%y")}}
-    <h3>Price per day:</h3>{{tool.price}}
-    <h4>Posted by: </h4> {{tool.user.first_name}}
-    <p><img src="{{tool.tool_image}}"></p>
-    {% endfor %}
+<div class="container mx-auto mt-4">
+    <div class="container">
+        <div  class="row">
+            {% for tool in user.tools %}
+            <div class="col-md-4">
+                <div  class="card" style="width: 18rem;">
+                    <a>
+                        <img src="{{tool.tool_image }}" class="card-img-top" alt="tool_image">
+                    <div class="card-img-spacer">
+                    </div>
+                    </a>
+                    <!-- <p><img src="{{tool.tool_image}}"></p> -->
+                    <div class="card-body">
+                        <a href="/tools/{{tool.tool_id}}">{{tool.tool_name}}</a>
+                        <h6 class="mb-0 font-weight-semibold">{{tool.price}}$</h6>
+                        <p class="card-text">{{tool.description}}</p>
+                        <h6>Start Date| End Date:</h6>{{tool.availability_start.strftime("%m/%d/%y") }}| {{tool.availability_end.strftime("%m/%d/%y")}}
+                        <!-- <h3>Price per day:</h3>{{tool.price}} -->
+                        <!-- <h4>Posted by: </h4> {{tool.user.first_name}} -->
+                        <br>
+                        {% if tool.reviews %}
+                        <div class="reviews">
+                        
+                            <p> Average rating is: {{tool.get_avg_review_of_tool()}} <i class="fa fa-star"></i>
+                                ({{tool.reviews|length}}) &nbsp; </p>
+                            <ul>
+                                {% set review = tool.reviews[-1] %}
+                                <li>
+                                    {% for i in range(review.rating) %}
+                                    <i class="fa fa-star"></i>
+                                    {% endfor %}
+                                    {% if review.comment != None %}
+                                    {{ review.comment}}
+                                    {% endif %}
+                                </li>
+                            </ul>
+                        </div>
+                        {% endif %}
+                        <div>
+                            <a href="/tools/{{tool.tool_id}}/edit"><i class="fas fa-edit"></i></a>
+                            <a href="*"><i class="fab fa-facebook-f"></i></a>
+                            <a href="*"><i class="fab fa-twitter"></i></a>
+                            <a href="*"><i class="fab fa-instagram"></i></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
 </div>
 <script async src="https://maps.googleapis.com/maps/api/js?key={{GOOGLEMAP_KEY}}&callback=showToolsOnMap&libraries=places,geometry&solution_channel=GMP_QB_locatorplus_v6_cABCDE" async defer></script>
 

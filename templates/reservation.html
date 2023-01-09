@@ -3,50 +3,66 @@
 {% block body %}
 
 
-<h3> Hello {{user.first_name}}! These are all your Reserved Tools!</h3>
+<h4> Hello {{user.first_name}}! These are all your Reserved Tools!</h4>
 
-{% if session.get('user_id')  %}
-<div id="reserved-tools">
-    {% for res in reservations %}
-    <div id="reservation-{{res.reservation_id}}">
-        <h3>Item Name:</h3>
-        <p> {{res.tool.tool_name}}</p>  
-        <h3>Description:</h3>
-        <p> {{res.tool.description}}</p>
-        <h3>Location:</h3>
-        <p> {{res.tool.user.address}}</p>
-        <h3>Posted by:</h3>
-        <p> {{res.tool.user.first_name}}</p>
-        {% if res.start_date !=None and res.end_date !=None%}
-        <h3>available days:</h3>
-        <p> {{res.start_date.strftime("%m/%d/%y")}}| {{res.end_date.strftime("%m/%d/%y")}}</p>
-        {% endif %}
-        <p>Total is: {{res.total}}</p>
-        {% if res.tool.tool_image %}
-        <p><img src="{{res.tool.tool_image }}"></p><br>
-        {% endif %}
-        <br>
-        <button class="delete-reservation" value="{{res.reservation_id}}">Cnecele Reservation</button>
-        <!-- <a href="/user/reservation/delete/{{res.reservation_id}}">Cencel Reservation</a> -->
-        <!-- <a class = "check-out" href="/checkout" value="{{res.reservation_id}}">Proceed to checkout </a > -->
-<!-- ////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
-<form action="/payment" method="POST">
-    {% set amount = (res.total * 100) %}
-    <input type="hidden" name ="amount" value="{{amount/100}}">
-    <script
-      src="https://checkout.stripe.com/checkout.js"
-      class="stripe-button"
-      data-key="pk_test_51IsWrSDCSJx1xfN2KRMslaOm7pQnj52LZJGEjDGqCF7ofdHSR4mbpUXmDXv9ntRds8kul4pPma49UCsqw84qlzgl00zEQLuYY2"
-      data-name={{res.tool.tool_name}}
-      data-description={{res.tool.description}}
-      data-amount={{amount}}
-      data-currency="usd">
-    </script>
-</form>
-        {% endfor %}
-        {% endif %}
+{% if session.get('user_id') %}
+<div class="container mt-5 p-3 rounded cart">
+    <div class="row no-gutters">
+        <div id="reserved-tools">
+            <div class="col-md-8">
+                <div class="product-details mr-2">
+                    <div class="d-flex flex-row align-items-center"><a href="/dashboard"><i class="fa fa-long-arrow-left"></i><span class="ml-2">Continue
+                            Shopping</span></a></div>
+                    <hr>
+                    <div class="d-flex justify-content-between"><span>You have 1 items in your cart</span>
+                        <div class="d-flex flex-row align-items-center"><span class="text-black-50"></span>
+                            <!-- <div class="price ml-4"><span class="mr-1">price</span> -->
+                        </div>
+                    </div>
+                </div>
+                {% for res in reservations %}
+                <div id="reservation-{{res.reservation_id}}">
+                    <div class="d-flex justify-content-between align-items-center mt-3 p-2 items rounded">
+                        <!-- ////////////////////////////////////////// -->
+                        <div class="d-flex flex-row">
+                            <!-- {% if res.tool != None %} -->
+                            <img class="rounded" src="{{res.tool.tool_image }}" width="150">
+                            <div class="ml-2"><span class="font-weight-bold d-block">{{res.tool.tool_name}}</span>
+                                <span class="spec">{{res.tool.description}}</span>
+                                {% if res.start_date !=None and res.end_date !=None%}
+                                <span class="spec"> {{res.start_date.strftime("%m/%d/%y")}}| {{res.end_date.strftime("%m/%d/%y")}}</span>
+                            <!-- {% endif %} -->
+                                {% endif %}
+                            </div>
+                        </div>
+                        <div class="d-flex flex-row align-items-center"><span class="d-block"></span><span
+                                class="d-block ml-5 font-weight-bold">${{res.total}}</span>
+                            <i class="fa fa-trash-o ml-3 text-black-50"></i>
+                        </div>
+                        <br>
+                        <button class="delete-reservation"  value="{{res.reservation_id}}" >
+                            <span><i class="fa fa-trash mb-1 text-danger" value="{{res.reservation_id}}"></i></span></button>
+                        <!-- <a href="/user/reservation/delete/{{res.reservation_id}}"> <i class="fa fa-trash mb-1 text-danger"></i>Cencel Reservation</a> -->
+                        <!-- <a class = "check-out" href="/checkout" value="{{res.reservation_id}}">Proceed to checkout </a > -->
+                        <!-- ////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
+                        <form action="/payment" method="POST">
+                            {% set amount = (res.total * 100) %}
+                            <input type="hidden" name="amount" value="{{amount/100}}">
+                            <script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+                                data-key="pk_test_51IsWrSDCSJx1xfN2KRMslaOm7pQnj52LZJGEjDGqCF7ofdHSR4mbpUXmDXv9ntRds8kul4pPma49UCsqw84qlzgl00zEQLuYY2"
+                                data-name={{res.tool.tool_name}} data-description={{res.tool.description}}
+                                data-amount={{amount}} data-currency="usd">
+                            </script>
+                        </form>
+                        {% endfor %}
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
+</div>
 
-<a href="/dashboard"></a>
+<!-- <a href="/dashboard"></a> -->
 {% endblock %}

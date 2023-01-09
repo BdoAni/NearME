@@ -6,6 +6,8 @@ for (let delBtn of deleteResBtns) {
     // console.log(delBtn);
     delBtn.addEventListener("click", (evt) => {
         const res_id = evt.target.value;
+    console.log(res_id);
+
         fetch(`http:/user/reservation/delete/${res_id}`, {
             method: 'POST',
         })

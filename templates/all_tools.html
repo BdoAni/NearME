@@ -25,7 +25,7 @@
 
                             <p> Average rating is: {{tool.get_avg_review_of_tool()}} <i class="fa fa-star"></i>
                                 ({{tool.reviews|length}}) &nbsp; </p>
-                            <ul>
+                            <ul class="disply-review-cards">
                                 {% set review = tool.reviews[-1] %}
                                 <li>
                                     {% for i in range(review.rating) %}

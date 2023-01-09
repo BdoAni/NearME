@@ -1,7 +1,10 @@
 {% extends 'base.html' %}
 {% block title %}NearME Home Page{% endblock %}
+<!-- {% from 'search_tools.html' import search_tools %} -->
+
 {% block body %}
-<h1>Welcome to the home page!</h1>
+<h1> </h1>
+<!-- <div class="search-bar-div" >{{ search_tools()}}</div> -->
 <!-- <a href="/tools">View all tools</a>
 
 <h3> this is going to be a nav bar</h3>
@@ -12,9 +15,27 @@
     <input type="text" name="searched" placeholder="What are you looking for?" required>
     <input type="submit" value="Search">
 </form> -->
-<h3>need to get result back from the search bar and display on the page</h3> 
+<!-- <div id="map"></div> -->
+<div>
+    <div class="bg-image  text-center" style="
+        /* background-image: url('https://mdbcdn.b-cdn.net/img/Photos/Others/images/76.webp'); */
+        background-image: url('https://randrealty.com/files/2017/05/process.jpg');
+        
+        height: 150vh;">
+        <br>
+        <div class="text-home-p">
+            <h3 class=" h3-home-p ">Sell the experience...</h3>
+            <h3 class=" h3-home-p2 ">Not the product.</h3>
+            <h3 class=" h3-home-p3">Then sell it again.</h3>
+            <h5 class="h5-home-p3">"Make your garage equipments rentable in a few clicks!"</h5>
+        </div>
+    </div>
+</div>
+<!-- <h1> A place holder for all available tools/offers</h1> -->
+<!-- <script async
+    src="https://maps.googleapis.com/maps/api/js?key={{GOOGLEMAP_KEY}}&callback=showToolsOnMap&libraries=places,geometry&solution_channel=GMP_QB_locatorplus_v6_cABCDE"
+    async defer></script> -->
 
-<h1> A place holder for all available tools/offers</h1>
-
+<!-- <script src="/static/js/googleMap.js"></script> -->
 
 {% endblock %}

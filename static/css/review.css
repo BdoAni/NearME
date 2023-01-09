@@ -1,7 +1,6 @@
-*{
-    margin: 0;
-    padding: 0;
-}
+/* *{
+
+} */
 .rate {
     float: left;
     height: 46px;
@@ -60,12 +59,14 @@
 }
 
 body {
-    background: rgba(237, 239, 225, 0.963) !important;
+    /* background: rgba(237, 239, 225, 0.963) !important; */
+    background: #f5f7fa !important;
 }
 
 .card {
-    /* width: 290px; */
-    /* height: 580px; */
+    width: 290px;
+    height: 580px;
+    margin-top: 35px;
     background: rgb(26, 45, 45); 
     border: 1px solid #4d4a4b;
     color: rgba(243, 237, 237, 0.8);
@@ -73,10 +74,11 @@ body {
 }
 .card-body{
     /* margin-top: 220px; */
+    height: 320px;
 }
 
 .btn {
-    border: 3px solid;
+    border: 2px solid;
     border-image-slice: 1;
     background: var(--gradient) !important;
     -webkit-background-clip: text !important;
@@ -88,7 +90,7 @@ body {
 
 .btn:hover,
 .btn:focus {
-    background: var(--gradient) !important;
+    /* background: var(--gradient) !important; */
     -webkit-background-clip: none !important;
     -webkit-text-fill-color: rgb(125, 189, 172) !important;
     border: 5px solid #fff !important;
@@ -108,3 +110,116 @@ body {
     width: 290px;
     height: 216px;
 }
+
+/* //////////////////////////// home page style for search bar \\\\\\\\\\\\\\\\\\\\ */
+.search-bar-div{
+    margin-left: 30%;
+}
+.tool-details{
+    display: inline-block;
+    
+}
+/* .disply-review-cards{
+    width: 250px; 
+    height: 200px;
+} */
+.user-dashboard-map-card{
+display: flex;
+}
+.h3-home-p{
+    position: relative;
+    margin-top: 20px;
+    margin-right: 65%;
+}
+.h3-home-p2{
+    margin-right: 55%;
+}
+.h3-home-p3{
+    margin-right: 45%;
+}
+.h5-home-p3{
+    margin-right: 65%;
+}
+.tool-details-img{
+ display: inline-block;
+-ms-flex-direction: column-reverse;
+}
+.text-home-p{
+    
+}
+
+/* ////////////////////////// Reservation page \\\\\\\\\\\\\\\\\\\\\\\\\\\\ */
+.product-details {
+    padding: 10px;
+}
+.p-about {
+    font-size: 12px;
+}
+.table-shadow {
+    -webkit-box-shadow: 5px 5px 15px -2px rgba(0, 0, 0, 0.42);
+    box-shadow: 5px 5px 15px -2px rgba(0, 0, 0, 0.42);
+}
+.type {
+    font-weight: 400;
+    font-size: 10px;
+}
+label.radio {
+    cursor: pointer;
+}
+label.radio input {
+    position: absolute;
+    top: 0;
+    left: 0;
+    visibility: hidden;
+    pointer-events: none;
+}
+.line {
+    border-bottom: 1px solid rgb(102, 102, 221);
+}
+
+.information span {
+    font-size: 12px;
+    font-weight: 500;
+}
+
+.information {
+    margin-bottom: 5px;
+}
+
+.items {
+    -webkit-box-shadow: 5px 5px 4px -1px rgba(0, 0, 0, 0.25);
+    box-shadow: 5px 5px 4px -1px rgba(0, 0, 0, 0.08);
+}
+
+.spec {
+    font-size: 11px;
+}
+label.radio span {
+    padding: 1px 12px;
+    border: 2px solid #ada9a9;
+    display: inline-block;
+    color: #8f37aa;
+    border-radius: 3px;
+    text-transform: uppercase;
+    font-size: 11px;
+    font-weight: 300;
+}
+label.radio input:checked+span {
+    border-color: #fff;
+    background-color: blue;
+    color: #fff;
+}
+
+/* .delete-reservation{
+ 
+  border: none;
+  padding: 0!important;
+  /*optional*/
+  font-family: arial, sans-serif;
+  /*input has OS specific font-family*/
+  color: #069;
+  text-decoration: underline;
+  cursor: pointer;
+} */
+
+/* //////////////////////////////////////////////////////////////////////// */

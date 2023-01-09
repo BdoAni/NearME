@@ -11,10 +11,13 @@ let map;
 
 
 function showToolsOnMap() {
+    console.log("********* navigator.geolocation *****", navigator.geolocation)
     if ( !navigator.geolocation) {
-        console.error('You mast turn on your location ');
+        alert('You must turn on your location');
+        
     }
     navigator.geolocation.getCurrentPosition((position) => {
+        console.log("*********  map  position *****", position)
         const userLocation = {
             lat: position.coords.latitude,
             lng: position.coords.longitude,
@@ -24,6 +27,8 @@ function showToolsOnMap() {
             zoom: 11,
             mapTypeControl: false,
         });
+        console.log("*********  map *****", map )
+
         const searchToolName = document.querySelector("#search_tool_name").value;
         // .then(())
         fetch(`/search?searched=${searchToolName}`)
@@ -34,7 +39,10 @@ function showToolsOnMap() {
             for(let tool of toolResults){
                 createToolMarkerOnMap(map, tool, geocoder)
             }
-        })
+        }),
+        ()=>{
+            alert('Your geolocation is OFF, turn On!')
+        }
     })
 };
 // const title = document.createElement('a').setAttribute('href', `/tools/${tool_id}`)

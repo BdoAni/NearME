@@ -37,8 +37,8 @@ stripe.api_key=os.environ['ENDPOINTSECRET_KEY']
 @app.route('/')
 def homepage():
     """View homepage."""
-
-    return render_template('homepage.html')
+    
+    return render_template('homepage.html', GOOGLEMAP_KEY=GOOGLEMAP_KEY)
 
 # ////////////////////////////////////////// GOOGLE MAP GET///////////////////////
 @app.route('/map')
@@ -95,10 +95,10 @@ def register_user_in_react():
     email = data.get("email")
     password = data.get("password")
     address = data.get("address")
-    print(f'******************* PRINTING request.files {request.files}')
+    # print(f'******************* PRINTING request.files {request.files}')
     
     profile_image = request.files['file']  
-    print(f'******************* PRINTING profile_image {profile_image}')
+    # print(f'******************* PRINTING profile_image {profile_image}')
     result = cloudinary.uploader.upload(
         file=profile_image,
         api_key=CLOUDINARY_KEY,
@@ -179,7 +179,7 @@ def show_user_dashboard():
 
     return render_template("user_dashboard.html", user=user, GOOGLEMAP_KEY=GOOGLEMAP_KEY)
 
-#//////////////////////////// display all users ////////////////////
+#//////////////////////////// display a user ////////////////////
 @app.route("/users/<user_id>")
 def show_user(user_id):
     """Show details on a particular user."""
@@ -220,9 +220,6 @@ def all_tools():
                                   num_three_star_ratings +
                                   num_two_star_ratings +
                                   num_one_star_ratings))
-    # print(f'********************* PRINTING RATING STARs { rating_stars}') 
-    # if rating_stars==5:
-    # print (f"this ****************** {tool.tool_name} has been rated: { rating_stars} ")
     star_avg=Tool.get_avg_review_of_tool(tool)
 
     return render_template("all_tools.html", tools=tools, rating_stars=rating_stars, star_avg=star_avg)
@@ -468,11 +465,11 @@ def reservation_tools():
         return redirect("/")
     user_id=session["user_id"]
     user=User.get_by_id(user_id)
-
+    for res in user.reservations:
+        print(f'********************** USER RESERVATIONS: {res.tool}')
     # reservations = Reservation.all_reservations()
    
-    
-    return render_template( 'reservation.html',  user=user, reservations=user.reservations)
+    return render_template( 'reservation.html', user=user, reservations = user.reservations)
 
 
 
