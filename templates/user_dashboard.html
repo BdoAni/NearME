@@ -1,34 +1,29 @@
 {% extends 'base.html' %}
 {% from 'search_tools.html' import search_tools %}
 
-
 {% block body %}
-<h1> Hello {{user.first_name}}! </h1>
+<!-- <h1> Hello {{user.first_name}}! </h1> -->
 <div class="user-dashboard-map-card">
 {{ search_tools()}}
 <div class="container mx-auto mt-4">
     <div class="container">
         <div  class="row">
             {% for tool in user.tools %}
-            <div class="col-md-4">
+            <div class="col-md-6 auto">
                 <div  class="card" style="width: 18rem;">
-                    <a>
+                    <!-- <a> -->
+                        <div class="card-img-spacer">
                         <img src="{{tool.tool_image }}" class="card-img-top" alt="tool_image">
-                    <div class="card-img-spacer">
-                    </div>
-                    </a>
-                    <!-- <p><img src="{{tool.tool_image}}"></p> -->
+                        </div>
+                    <!-- </a> -->
                     <div class="card-body">
                         <a href="/tools/{{tool.tool_id}}">{{tool.tool_name}}</a>
                         <h6 class="mb-0 font-weight-semibold">{{tool.price}}$</h6>
                         <p class="card-text">{{tool.description}}</p>
                         <h6>Start Date| End Date:</h6>{{tool.availability_start.strftime("%m/%d/%y") }}| {{tool.availability_end.strftime("%m/%d/%y")}}
-                        <!-- <h3>Price per day:</h3>{{tool.price}} -->
-                        <!-- <h4>Posted by: </h4> {{tool.user.first_name}} -->
                         <br>
                         {% if tool.reviews %}
                         <div class="reviews">
-                        
                             <p> Average rating is: {{tool.get_avg_review_of_tool()}} <i class="fa fa-star"></i>
                                 ({{tool.reviews|length}}) &nbsp; </p>
                             <ul>

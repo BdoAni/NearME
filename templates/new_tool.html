@@ -1,37 +1,44 @@
 {% extends 'base.html' %}
 
-<h1> Hello {{user.first_name}}!Now you can create your tool! </h1>
+<h1> Hello {{user.first_name}}</h1>
 
 {% block body %}
 
 <h2>Create a Tool </h2>
+<!-- <div class="card shadow-1-strong" style="border-radius: 1rem;">
+    <div class="card-body p-12 text-lg-start"> -->
+        <!-- <div class="card-body p-8 text-center"> -->
+
 <form action="/tools/new" method="POST" enctype="multipart/form-data" >
     <p>
-        Tool Name<input type="text" name="name">
+        <input id="tool-name" type="text" name="name"/>
+        <label for="tool-name">Tool Name </label>
     </p>
     <p>
-        Description <input type="text" name="description"> </p>
+        <input id="tool-description"  type="text" name="description"/>
+        <label for="tool-description">Description </label>
+     </p>
     <p>
-        Price<input type="number" min="1" step="0.01" name="price">
+        <input  id="tool-price" type="number" min="1" step="0.01" name="price">
+        <label for="tool-price">Price </label>
     </p>
     <p>
-        Start Date:<input  type="date" name="formstart_date" pattern="mm/dd/yyyy" >
+        <input id="tool-start-day" type="date" name="formstart_date" pattern="mm/dd/yyyy" />
+        <label for="tool-start-day">Start Date: </label>
     </p>
     <p>
-        End Date:<input  type="date" name="formend_date"  pattern="mm/dd/yyyy"  >
+        <input id="tool-end-day" type="date" name="formend_date"  pattern="mm/dd/yyyy"  />
+        <label for="tool-end-day">End Date: </label>
+
     </p>
     <p>
-        Upload your img: <input type="file" id="file" name="file" ></p>
+        <input type="file" id="file" name="file" />
+    </p>
     <p>
         <input type="submit">
     </p>
-    <a href="/"> Cancel </a>
+    <a href="/dashboard"> Cancel </a>
 </form>
-
-
-Add an image:
-<!-- <form action="/post-form-data" method="POST" enctype="multipart/form-data">
-    <input type="submit">
-    <p><input type="file" name="my-file"></p>
-</form> -->
+<!-- </div>
+</div> -->
 {% endblock %}

@@ -1,31 +1,35 @@
 {% extends 'base.html' %}
 {% block title %}NearME checkout page{% endblock %}
-<html>
 
-<head>
-    <title>rent the tool</title>
-    <link rel="stylesheet" href="style.css">
-</head>
 {% block body %}
+{% if session.get('user_id') %}
+<section>
+    <form class="checkout-form" action="/create-checkout-session" method="POST">
+        {% for res in reservations %}
+        <div>
+            <input name="tool_name" value="{{res.tool.tool_name}}" />
+            <input name="amount" value="{{res.total }}" />
+            {% set amount = (res.total * 100) %}
+            <input type="hidden" name="amount" value="{{amount/100}}">
+            <input name="currency" value="USD" />
+            <input type="hidden" name="tool_id" value="{{res.tool.tool_id}}" />
+            <input type="hidden" name="reservation_id" value="{{res.reservation_id}}" />
 
-<body>
-    {% if session.get('user_id')  %}
-    <section>
-        {% for user in user.reservations %}
-        <form action="/create-checkout-session" method="POST">
-            <input  name="tool_name" value="{{user.tool.tool_name}}"/>
-            <input  name="amount" value="{{user.tool.price}}"/>
-            <input  name="currency" value="USD"/>
-            <input type="hidden" name="tool_name" value="{{user.tool.tool_name}}"/>
-            <button type="submit" id="checkout-button">Checkout</button>
-        </form>
+        </div>
         {% endfor %}
-    </section>
-    {%  endif %}
-</body>
+        <button type="submit" class="checkout-button">Checkout</button>
+    </form>
+</section>
+{% endif %}
+<script type="text/javascript">
+    const stripeKey = "{{ stripe_key }}"
+</script>
+<!-- document.query.selectClassElement('.checkout-form') -->
+<!-- <script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+    data-key="pk_test_51IsWrSDCSJx1xfN2KRMslaOm7pQnj52LZJGEjDGqCF7ofdHSR4mbpUXmDXv9ntRds8kul4pPma49UCsqw84qlzgl00zEQLuYY2">
+    "url":`https://checkout.stripe.com/c/pay/+${stripeKey}`
+</script> -->
 <script src="https://polyfill.io/v3/polyfill.min.js?version=3.52.1&features=fetch"></script>
 <script src="https://js.stripe.com/v3/"></script>
 <script src="/static/js/checkout.js"></script>
 {% endblock %}
-
-</html>

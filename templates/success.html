@@ -1,17 +1,126 @@
 {% extends 'base.html' %}
-<!DOCTYPE html>
-<html>
 
 <head>
     <title>Thanks for your order!</title>
     <link rel="stylesheet" href="style.css">
-    <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
+
 </head>
 {% block body %}
-
-<body>
+<div class="invoice-page">
     <div id="map"></div>
-    <section>
+
+
+    <div class="section-invoice">
+        <div class="receipt-content">
+            <div class="container bootstrap snippets bootdey">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="invoice-wrapper">
+                            {% for order in reservations %}
+                            <div class="intro">
+                                Hi <strong>{{order.user.first_name}} {{order.user.last_name}}</strong>,
+                                <br>
+                                This is the receipt for a payment of <strong>${{order.total}}</strong> (USD) for your {{
+                                reservations[0].tool.tool_name }}
+                            </div>
+                            <div class="payment-info">
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <span>Payment No.</span>
+                                        <strong id="invoice-number">1080{{reservations[0].reservation_id }}</strong>
+                                    </div>
+                                    <div class="col-sm-6 text-right">
+                                        <span>Payment Date</span>
+                                        <strong>
+                                            <p>Date/Time: <span id="datetime"></span></p>
+                                            <script>
+                                                var dt = new Date();
+                                                document.getElementById("datetime").innerHTML = dt.toLocaleString();</script>
+                                        </strong>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="payment-details">
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <span>You</span>
+                                        <strong>
+                                            {{order.user.first_name}} {{order.user.last_name}}
+                                        </strong>
+                                        <p>
+                                            <a href="http://maps.google.com/maps?q={{order.user.address}}">
+                                                {{order.user.address}} </a>
+                                            <br>
+                                            <a href="#">
+                                                {{order.user.email}}
+                                            </a>
+                                        </p>
+                                    </div>
+                                    <div class="col-sm-6 text-right">
+                                        <span>Payment To</span>
+                                        <strong>
+                                            Juan fernando arias
+                                        </strong>
+                                        <p>
+                                            <a href="http://maps.google.com/maps?q={{order.tool.user.address}}">
+                                                {{order.tool.user.address}}</a>
+                                            <br>
+                                            <a href="#">
+                                                {{order.tool.user.email}}
+                                            </a>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="line-items">
+                                <div class="headers clearfix">
+                                    <div class="row-header">
+                                        <div class="col-xs-3">Description</div>
+                                        <div class="col-xs-3">Start Day|End Day</div>
+                                        <div class="col-xs-5 text-right">Amount</div>
+                                    </div>
+                                </div>
+                                <div class="items">
+                                    <div class="row-header">
+                                        <div class="col-xs-3 desc">
+                                            {{order.tool.tool_name}}
+                                        </div>
+                                        <div class="col-xs-3 qty">
+                                            {{order.start_date.strftime("%m/%d/%y")}}|
+                                            {{order.end_date.strftime("%m/%d/%y")}}
+                                        </div>
+                                        <div class="col-xs-5 amount text-right">
+                                            <p>{{order.total}}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="total text-right">
+                                    <p class="extra-notes">
+                                        <strong>Extra Notes</strong>
+                                        We appreciate your business! If you have any questions, please email
+                                        <a href="mailto:nearmebefree@gmail.com">nearmebefree@gmail.com</a>
+                                        Please pick up all items at the same day.
+                                    </p>
+                                    <div class="field grand-total">
+                                        Total <span>{{order.total}}</span>
+                                    </div>
+                                </div>
+                                <div class="print">
+                                    <a href="#">
+                                        <i class="fa fa-print"></i>
+                                        Print this receipt
+                                    </a>
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- <section >
         <p>
             We appreciate your business! If you have any questions, please email
             <a href="mailto:nearmebefree@gmail.com">nearmebefree@gmail.com</a>
@@ -27,16 +136,19 @@
             </p>
             {% endfor %}
         </p>
-    </section>
-    <script type="text/javascript">
-            const toolAddresses = ({{addresses|tojson}});  
-            const userAddress = ({{ user.address|tojson}});  
-    </script>
-    <script async
-        src="https://maps.googleapis.com/maps/api/js?key={{GOOGLEMAP_KEY}}&libraries=places,geometry&solution_channel=GMP_QB_locatorplus_v6_cABCDE"
-        async defer></script>
-    <script src="/static/js/tool_sharce.js"></script>
-</body>
+    </section> -->
+</div>
+</div>
+<script type="text/javascript">
+    const toolAddresses = ({{ addresses| tojson}});
+    const userAddress = ({{ user.address| tojson}});  
+</script>
+<script async
+    src="https://maps.googleapis.com/maps/api/js?key={{GOOGLEMAP_KEY}}&libraries=places,geometry&solution_channel=GMP_QB_locatorplus_v6_cABCDE"
+    async defer></script>
+
+<script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
+<script src="/static/js/tool_sharce.js"></script>
 {% endblock %}
 
 </html>

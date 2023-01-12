@@ -1,31 +1,42 @@
 {% extends 'base.html' %}
 {% block title %}NearME tool edit page{% endblock %}
 {% block body %}
-<h1> Hello {{user.first_name}}! You are now able to  editing your tool detail information! </h1>
 
-<h2>Editing a Tool </h2> 
-<form action="/tools/{{tool.tool_id}}/edit" method="POST"  enctype="multipart/form-data">
+
+<h3>Editing {{tool.tool_name}} </h3> 
+<div class="edit-toolcard">
+<form class= " edit-tool" action="/tools/{{tool.tool_id}}/edit" method="POST"  enctype="multipart/form-data">
     <p>
-        Tool Name<input type="text" name="name" value="{{tool.tool_name}}">
+        <label  for ="tool-name">Tool Name </label>
+        <input id="tool-name" type="text" name="name" value="{{tool.tool_name}}">
     </p>
     <p>
-        Description <input type="text" name="description" value="{{tool.description}}"> </p>
-    <p>
-        Price<input type="number" min="1" step="0.01" name="price" value="{{tool.price}}">
+        <label for="tool-description">Description </label>
+        <input id="tool-description" type="text" name="description" value="{{tool.description}}"> 
     </p>
     <p>
-        Start Date:<input  type="date" pattern="mm/dd/yyyy"  name="formstart_date" value="{{tool.availability_start}}">
+        <label for="tool-price">Price </label>
+        <input id="tool-price" type="number" min="1" step="0.01" name="price" value="{{tool.price}}">
     </p>
     <p>
-        End Date:<input  type="date" pattern="mm/dd/yyyy" name="formend_date" value="{{tool.availability_end}}" >
+        <label for="tool-start-day">Start Date: </label>
+        <input  type="date" pattern="mm/dd/yyyy"  name="formstart_date" value="{{tool.availability_start}}">
     </p>
     <p>
-        Upload your img: <input type="file" id="file" name="file" >
+        <label for="tool-end-day">End Date: </label>
+        <input  type="date" pattern="mm/dd/yyyy" name="formend_date" value="{{tool.availability_end}}" >
+    </p>
+    <p>
+        <label for="tool-end-day">Upload your img: </label>
+        <input type="file" id="file" name="file" >
     </p>
     <p>
         <input type="submit">
     </p>
-    <a href="/dashboard"> Cancel </a> <br>
-    <a a href="/tools/delete/{{tool.tool_id}}">Delete</a>
 </form>
+</div>
+
+
+<a href="/dashboard"> Cancel </a> <br>
+<a a href="/tools/delete/{{tool.tool_id}}">Delete</a>
 {% endblock %}

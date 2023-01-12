@@ -146,6 +146,7 @@ def process_login():
     # Log in user by storing the user's email in session
     session["user_id"] = user.user_id
     session["email"] = email 
+    session["first_name"] = user.first_name
     # print(" ******** email **************", email)
     flash(f"Welcome back, {user.first_name}!")
 
@@ -465,8 +466,9 @@ def reservation_tools():
         return redirect("/")
     user_id=session["user_id"]
     user=User.get_by_id(user_id)
-    for res in user.reservations:
-        print(f'********************** USER RESERVATIONS: {res.tool}')
+    # for res in user.reservations:
+        # print(f'********************** USER RESERVATIONS: {res.tool}')
+        # print(f'********************** USER RESERVATIONS: {res.tool}')
     # reservations = Reservation.all_reservations()
    
     return render_template( 'reservation.html', user=user, reservations = user.reservations)
@@ -483,6 +485,15 @@ def get_publishable_key():
     return jsonify(stripe_config)
 
 
+@app.route('/checkout')
+def checkout():
+    if not "user_id" in session:
+        return redirect("/")
+    user_id=session["user_id"]
+    user=User.get_by_id(user_id)
+                    
+    return render_template('/checkout.html', reservations=user.reservations, stripe_key=stripe_keys['STRIPEPAYMENTS_KEY'])
+
 # /////////////////////////////////// Checkout STRIPE /////////////////////////
 @app.route("/payment",  methods=["POST"])
 def payments_forms():
@@ -495,21 +506,18 @@ def payments_forms():
     source=request.form['stripeToken'],
     )
     amount = request.form.get('amount').replace('.','')
-# TODO Change ammount to save in the stripe account __DONE
+
     charge = stripe.Charge.create(
         customer=customer.id,
         description='',
         amount=amount,
         currency='usd',
     )
-    # user_id=session["user_id"]
-    # user=User.get_by_id(user_id)
-    # reservation = Reservation.all_reservations()
-
+    
     return redirect('/success')
 
 # //////////////////////////////////////////////////////////////////////////
-@app.route("/success")
+@app.route('/payment/success')
 def success_forms():
     
     if not "user_id" in session:
@@ -520,10 +528,6 @@ def success_forms():
     addresses=[]
     for reservation in user.reservations:
         addresses.append(reservation.tool.user.address)
-        
-        # addresses.append(escape(reservation.tool.user.address))
-        # session.clear()
-        # return 'Session cleared!'
 
     return render_template('success.html', user=user,  reservations=user.reservations, addresses=addresses, GOOGLEMAP_KEY=GOOGLEMAP_KEY )
 
@@ -531,35 +535,47 @@ def success_forms():
 
 @app.route('/create-checkout-session', methods=['POST'])
 def create_checkout_session():
-    
+      # define the tools variable
+      
     if not "user_id" in session:
         return redirect("/")
     user_id=session["user_id"]
-    tools = Tool.all_tools()
+    user=User.get_by_id(user_id)
+    
+
+    # tools = Tool.all_tools()
+    # import pdb; pdb.set_trace()
     try:
         data = json.loads(request.data)
+        print(f'******************* PRINT data', data)
+        
     # get tool
-        tool_reservation_to_purchase=''
-        for tool in tools:
-            if tool['id'] == data['tool_id']:
-                tool_reservation_to_purchase=tool
+        tool_id=int(data['tool_id'])
+        tool_to_purchase=Tool.get_by_id(tool_id)
+        reservation_id=int(data['reservation_id'])
+        reservation=Reservation.get_by_id(reservation_id)
     # create new checkout session
         checkout_session = stripe.checkout.Session.create(
+            expand= ['line_items'],
             line_items=[
                  {
-                    'name': tool_reservation_to_purchase['user.tool_name'],
+                    'name': tool_to_purchase.tool_name,
                     'quantity': 1,
                     'currency': 'USD',
-                    'amount': 9.99
+                    'amount': int(reservation.total * 100)
                 }
             ],
             mode='payment',
-            success_url= LOCAL_DOMAIN + '/success.html',
-            cancel_url=  LOCAL_DOMAIN+ '/cancel.html',
+            success_url= LOCAL_DOMAIN + '/success',
+            cancel_url=  LOCAL_DOMAIN + '/cancel',
         )
-        return jsonify({'sessionId': checkout_session['id']})
+        print(f'******************* PRINT checkout_session ', checkout_session )
+        
+        # return jsonify({'sessionId': checkout_session['id']})
+        return jsonify(checkout_session)
     except Exception as e:
-         return jsonify(error=str(e)), 403
+        print(f'******************* PRINT E', e)
+        return jsonify(error=str(e))
 
     # return redirect(checkout_session.url, code=303)
 

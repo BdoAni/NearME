@@ -1,8 +1,7 @@
-
 {% extends 'base.html' %}
 {% block head %}{% endblock %}
 {% block body %}
-<p class="text-left h1 fw-bold mb-5 mx-1 mx-md-4 mt-4">Create an Account</p>
+<h2>Create an Account</h2>
 <!-- <form action="/users/new" method="POST">
     <p>
         First Name <input type="text" name="fname"/ >
@@ -26,25 +25,32 @@
     <p>
         <input type="submit" /  >
     </p>
+
+        
+
 </form> -->
-<div id="app"> </div>
 
-<h2>Log In</h2>
-<form action="/login" method="POST">
-    <p>
-        Email <input type="text" name="email"/>
-    </p>
+<div class="login-form">
+    <div id="app"> </div>
+    <div >
+        <h2>Log In</h2>
+        <form action="/login" method="POST">
+            <p> 
+                <input id="email"  type="email" name="email" />
+                <label class="form-label" for="email"> Email </label>
+            </p>
+            <p>
+                <input id="loginPassword" type="password" name="password" />
+                <label lass="form-label" for="loginPassword">Password </label>
+            </p>
 
-    <p>
-        Password <input type="password" name="password"/>
-    </p>
-
-    <p>
-        <input type="submit" />
-    </p>
-</form>
-
-
+            <p>
+                <button type="submit" class="btn btn-primary btn-block mb-3">Sign in</button>
+                <!-- <input type="submit" /> -->
+            </p>
+        </form>
+    </div>
+</div>
 
 <!-- <h1>This is happy REACT form</h1> -->
 <!-- <div id ="registration-popup" > </div> -->

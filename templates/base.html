@@ -52,6 +52,9 @@
                     <li class="nav-item">
                         <a class="nav-link active" aria-current="page" href="/tools/new"> Add tool</a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="/users/{{session['user_id'] }}"> {{ session['first_name'] }}</a>
+                    </li>
                   
                     {% else %}
                     <!-- <li class="nav-item dropdown">
