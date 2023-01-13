@@ -3,40 +3,50 @@
 {% block body %}
 
 
-<h3>Editing {{tool.tool_name}} </h3> 
+<h3 class="edit-h5">Editing {{tool.tool_name}} </h3>
 <div class="edit-toolcard">
-<form class= " edit-tool" action="/tools/{{tool.tool_id}}/edit" method="POST"  enctype="multipart/form-data">
-    <p>
-        <label  for ="tool-name">Tool Name </label>
-        <input id="tool-name" type="text" name="name" value="{{tool.tool_name}}">
-    </p>
-    <p>
-        <label for="tool-description">Description </label>
-        <input id="tool-description" type="text" name="description" value="{{tool.description}}"> 
-    </p>
-    <p>
-        <label for="tool-price">Price </label>
-        <input id="tool-price" type="number" min="1" step="0.01" name="price" value="{{tool.price}}">
-    </p>
-    <p>
-        <label for="tool-start-day">Start Date: </label>
-        <input  type="date" pattern="mm/dd/yyyy"  name="formstart_date" value="{{tool.availability_start}}">
-    </p>
-    <p>
-        <label for="tool-end-day">End Date: </label>
-        <input  type="date" pattern="mm/dd/yyyy" name="formend_date" value="{{tool.availability_end}}" >
-    </p>
-    <p>
-        <label for="tool-end-day">Upload your img: </label>
-        <input type="file" id="file" name="file" >
-    </p>
-    <p>
-        <input type="submit">
-    </p>
-</form>
+    <form class=" edit-tool" action="/tools/{{tool.tool_id}}/edit" method="POST" enctype="multipart/form-data">
+        
+        <div>
+            <a href="/tools"><i class="fa fa-home"></i></a>
+            <a class=" fa fa-trash mb-1 text-danger" href="/tools/delete/{{tool.tool_id}}"></a>
+        </div>
+
+        <p>
+            <input id="tool-name" type="text" name="name" value="{{tool.tool_name}}">
+            <label for="tool-name">Tool Name </label>
+        </p>
+        <p>
+            <input id="tool-description" type="text" name="description" value="{{tool.description}}">
+            <label for="tool-description">Description </label>
+        </p>
+        <p>
+            <input id="tool-price" type="number" min="1" step="0.01" name="price" value="{{tool.price}}">
+            <label for="tool-price">Price </label>
+        </p>
+        <p>
+            <input class="dates" type="date" pattern="mm/dd/yyyy" name="formstart_date"
+                value="{{tool.availability_start}}">
+            <label for="tool-start-day">Start Date: </label>
+        </p>
+        <p>
+            <input class="dates" type="date" pattern="mm/dd/yyyy" name="formend_date" value="{{tool.availability_end}}">
+            <label for="tool-end-day">End Date: </label>
+        </p>
+        <p>
+            <input type="file" id="file" name="file">
+            <label for="tool-end-day"> </label>
+        </p>
+        <p>
+            <input class="submit-button" type="submit">
+
+        </p>
+    </form>
+    <div class="edit-image">
+
+        <img src="{{tool.tool_image }}"  alt="tool_image">
+
+    </div>
 </div>
 
-
-<a href="/dashboard"> Cancel </a> <br>
-<a a href="/tools/delete/{{tool.tool_id}}">Delete</a>
 {% endblock %}

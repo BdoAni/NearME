@@ -4,41 +4,46 @@
 
 {% block body %}
 
-<h2>Create a Tool </h2>
-<!-- <div class="card shadow-1-strong" style="border-radius: 1rem;">
-    <div class="card-body p-12 text-lg-start"> -->
-        <!-- <div class="card-body p-8 text-center"> -->
+<div class="tool-info">
+    <div>
+        <h5>Create a Tool </h5>
+    <form action="/tools/new" method="POST" enctype="multipart/form-data">
+        <p>
+            <input id="tool-name" type="text" name="name" />
+            <label for="tool-name">Tool Name </label>
+        </p>
+        <p>
+            <input id="tool-description" type="text" name="description" />
+            <label for="tool-description">Description </label>
+        </p>
+        <p>
+            <input id="tool-price" type="number" min="1" step="0.01" name="price">
+            <label for="tool-price">Price </label>
+        </p>
+        <p>
+            <input id="tool-start-day" type="date" name="formstart_date" pattern="mm/dd/yyyy" />
+            <label for="tool-start-day">Start Date </label>
+        </p>
+        <p>
+            <input id="tool-end-day" type="date" name="formend_date" pattern="mm/dd/yyyy" />
+            <label for="tool-end-day">End Date </label>
 
-<form action="/tools/new" method="POST" enctype="multipart/form-data" >
-    <p>
-        <input id="tool-name" type="text" name="name"/>
-        <label for="tool-name">Tool Name </label>
-    </p>
-    <p>
-        <input id="tool-description"  type="text" name="description"/>
-        <label for="tool-description">Description </label>
-     </p>
-    <p>
-        <input  id="tool-price" type="number" min="1" step="0.01" name="price">
-        <label for="tool-price">Price </label>
-    </p>
-    <p>
-        <input id="tool-start-day" type="date" name="formstart_date" pattern="mm/dd/yyyy" />
-        <label for="tool-start-day">Start Date: </label>
-    </p>
-    <p>
-        <input id="tool-end-day" type="date" name="formend_date"  pattern="mm/dd/yyyy"  />
-        <label for="tool-end-day">End Date: </label>
+        </p>
+        <p>
+            <input type="file" id="file" name="file" />
+        </p>
+        <p>
+            <input class="submit-button" type="submit">
+        </p>
+    </form>
+    <div>
+        <a href="/tools"><i class="fa fa-home"></i></a>
+    </div>
+    </div>
+    <!-- <div>
+        <img src="/static/img/1.3.PNG"/>
+    </div> -->
+</div>
 
-    </p>
-    <p>
-        <input type="file" id="file" name="file" />
-    </p>
-    <p>
-        <input type="submit">
-    </p>
-    <a href="/dashboard"> Cancel </a>
-</form>
-<!-- </div>
-</div> -->
+
 {% endblock %}

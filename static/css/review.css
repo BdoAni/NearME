@@ -70,24 +70,14 @@ body {
     color: rgba(243, 237, 237, 0.8);
     margin-bottom: 2rem;
 }
-.card-body{
-    /* margin-top: 220px; */
-    height: 320px;
-}
+
 
 .btn {
     --bs-btn-color: #cad3dc;
     border: 2px solid;
-    /* border-image-slice: 1;
-    background: var(--gradient) !important;
-    -webkit-background-clip: text !important;
-    -webkit-text-fill-color: transparent !important;
-    border-image-source: var(--gradient) !important;
-    text-decoration: none;
-    transition: all .4s ease; */
-        position: absolute;
-        top: 480px;
-        margin-left: 50px;
+    position: absolute;
+    top: 480px;
+    margin-left: 50px;
 }
 
 .btn:hover,
@@ -127,26 +117,33 @@ body {
     border-bottom: 1px #aeaaaa solid;
     padding: 0 0 5px 0;
 }
-/* .disply-review-cards{
-    width: 250px; 
-    height: 200px;
-} */
+
 .user-dashboard-map-card{
 display: flex;
 }
 .h3-home-p{
-    position: relative;
+    /* position: relative; */
     margin-top: 20px;
-    margin-right: 75%;
+    /* margin-right: 75%; */
+    text-align: left;
+    margin-left: 85px;
 }
 .h3-home-p2{
-    margin-right: 65%;
+    /* margin-right: 65%; */
+    text-align: left;
+    margin-left: 175px;
 }
 .h3-home-p3{
-    margin-right: 55%;
+    /* margin-right: 55%; */
+    text-align: left;
+    margin-left: 275px;
 }
 .h5-home-p3{
-    margin-right: 75%;
+    /* margin-right: 75%; */
+        margin-left: 30px;
+        text-align: left;
+        font-style: italic;
+        font-weight: normal;
 }
 .tool-details-img{
  display: inline-block;
@@ -194,7 +191,99 @@ input[type=text] {
         margin-right: 10px;
         min-width: 25%;
 }
+#tool-end-daydit{
+    background-color: #fff;
+        border: 0;
+        border-radius: 2px;
+        box-shadow: 0 1px 4px -1px rgb(0 0 0 / 30%);
+        margin: 10px;
+        padding: 0 0.5em;
+        font: 400 18px Roboto, Arial, sans-serif;
+        overflow: hidden;
+        line-height: 40px;
+        margin-right: 10px;
+        min-width: 25%;
+    }
+#tool-start-daydit{
+    background-color: #fff;
+        border: 0;
+        border-radius: 2px;
+        box-shadow: 0 1px 4px -1px rgb(0 0 0 / 30%);
+        margin: 10px;
+        padding: 0 0.5em;
+        font: 400 18px Roboto, Arial, sans-serif;
+        overflow: hidden;
+        line-height: 40px;
+        margin-right: 10px;
+        min-width: 25%;
+}
+#tool-end-day{
+    background-color: #fff;
+        border: 0;
+        border-radius: 2px;
+        box-shadow: 0 1px 4px -1px rgb(0 0 0 / 30%);
+        margin: 10px;
+        padding: 0 0.5em;
+        font: 400 18px Roboto, Arial, sans-serif;
+        overflow: hidden;
+        line-height: 40px;
+        margin-right: 10px;
+        min-width: 25%;
+}
+#tool-start-day{
+    background-color: #fff;
+        border: 0;
+        border-radius: 2px;
+        box-shadow: 0 1px 4px -1px rgb(0 0 0 / 30%);
+        margin: 10px;
+        padding: 0 0.5em;
+        font: 400 18px Roboto, Arial, sans-serif;
+        overflow: hidden;
+        line-height: 40px;
+        margin-right: 10px;
+        min-width: 25%;
+}
+
 #loginPassword{
+    background-color: #fff;
+        border: 0;
+        border-radius: 2px;
+        box-shadow: 0 1px 4px -1px rgb(0 0 0 / 30%);
+        margin: 10px;
+        padding: 0 0.5em;
+        font: 400 18px Roboto, Arial, sans-serif;
+        overflow: hidden;
+        line-height: 40px;
+        margin-right: 10px;
+        min-width: 25%;
+}
+#tool-price{
+    background-color: #fff;
+        border: 0;
+        border-radius: 2px;
+        box-shadow: 0 1px 4px -1px rgb(0 0 0 / 30%);
+        margin: 10px;
+        padding: 0 0.5em;
+        font: 400 18px Roboto, Arial, sans-serif;
+        overflow: hidden;
+        line-height: 40px;
+        margin-right: 10px;
+        min-width: 25%;
+}
+#tool-price{
+background-color: #fff;
+    border: 0;
+    border-radius: 2px;
+    box-shadow: 0 1px 4px -1px rgb(0 0 0 / 30%);
+    margin: 10px;
+    padding: 0 0.5em;
+    font: 400 18px Roboto, Arial, sans-serif;
+    overflow: hidden;
+    line-height: 40px;
+    margin-right: 10px;
+    min-width: 25%;
+}
+.dates{
     background-color: #fff;
         border: 0;
         border-radius: 2px;
@@ -273,6 +362,12 @@ label.radio input:checked+span {
     display: flex;
     
 }
+.tool-info h5{
+        display: grid;
+        grid-template-columns: 400px auto;
+        padding-top: 25px;
+        margin-left: 35px;
+}
 .edit-tools{
         display: grid;
         grid-template-columns: auto auto;
@@ -284,10 +379,22 @@ label.radio input:checked+span {
 
 .tool-dit-div{
     display: grid;
-    grid-template-columns: auto auto;
+    grid-template-columns: 400px auto;
+    padding-top: 25px;
 }
 .edit-toolcard{
-    border-radius: solid black 2px;
+    border-radius: 2px;
+    display:flex;
+
+}
+.edit-tool{
+    display:inline-block;
+}
+.edit-image{
+    display: inline-block;
+}
+.edit-image img{
+    border-radius: 5px;
 }
 .d-block{
         margin-right: 20px px;
@@ -330,7 +437,7 @@ justify-content: space-around;
     border: 1px solid #CDD3E2;
     box-shadow: 0px 0px 1px #CCC;
     padding: 40px 40px 60px;
-    margin-top: 40px;
+    /* margin-top: 40px; */
     border-radius: 4px;
 }
 
@@ -553,4 +660,35 @@ justify-content: space-around;
 .total{
     display: flex;
         justify-content: space-between;
+}
+.check-out{
+        color: #fff;
+            background-color: #007bff;
+            border-color: #007bff;
+            border-radius: 0.3rem;
+            padding: 0.5rem 1rem;
+}
+.checkout-button{
+        color: #fff;
+            background-color: #007bff;
+            border-color: #007bff;
+            border-radius: 0.3rem;
+            padding: 0.5rem 1rem;
+}
+.submit-button {
+    color: #fff;
+        background-color: #007bff;
+        border-color: #007bff;
+        border-radius: 0.3rem;
+        padding: 0.5rem 1rem;
+        width: 30%;
+        display: block;
+}
+
+#submit_review{
+    color: #fff;
+        background-color: #007bff;
+        border-color: #007bff;
+        border-radius: 0.3rem;
+        padding: 0.5rem 1rem;
 }

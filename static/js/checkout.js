@@ -1,5 +1,5 @@
 'use strict'
-// alert("you connected to js") 
+alert("you connected to js") 
 
 // const checkoutLinks = document.querySelectorAll('.check-out')
 // for (const checkout of checkoutLinks) {
@@ -42,7 +42,6 @@ for(const form of forms){
 
             // console.log("**** printing a stripe key", {stripeKey})
             // console.log('***** data printing', fetchResult)
-            // var stripe = Stripe(data.checkout_public_key);
             const stripe = Stripe(stripeKey);
             
             const lineItems = [

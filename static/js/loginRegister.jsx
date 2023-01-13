@@ -8,7 +8,9 @@ function App(){
         setShowForm(false);
     }
     return (<div>
-        {showForm ? <Register hideForm={hideForm} /> : <h2> You successfully created your account, Please login!</h2>}
+        {showForm ? <Register hideForm={hideForm} /> : <h5>You successfully created your account, Please login! </h5>
+                   
+        }
         </div>)
 }
 
@@ -32,7 +34,8 @@ function Register(props) {
 
     return (
             <div>
-                    <form onSubmit={handleRegister}>
+            <form class="form-register" onSubmit={handleRegister}>
+                <h5>Create an Account</h5>
                 <p>
                     <input id="firstName" type="text" name="first_name"  />
                     <label class="form-label" for="firstName"> First Name</label>
@@ -58,11 +61,11 @@ function Register(props) {
                     <label class="form-label" for="userImg"> </label>
                                             
                 </p>      
-                <button type="submit" class="btn btn-primary btn-block mb-3">Register</button>
+                <button type="submit" class="submit-login">Register</button>
 
                                     {/* <input type="submit"></input> */}
-                                    </form>
-                                </div>
+            </form>
+        </div>
 
     )
 

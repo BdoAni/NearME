@@ -11,11 +11,9 @@
             {% for tool in user.tools %}
             <div class="col-md-6 auto">
                 <div  class="card" style="width: 18rem;">
-                    <!-- <a> -->
                         <div class="card-img-spacer">
                         <img src="{{tool.tool_image }}" class="card-img-top" alt="tool_image">
                         </div>
-                    <!-- </a> -->
                     <div class="card-body">
                         <a href="/tools/{{tool.tool_id}}">{{tool.tool_name}}</a>
                         <h6 class="mb-0 font-weight-semibold">{{tool.price}}$</h6>
@@ -39,13 +37,14 @@
                             </ul>
                         </div>
                         {% endif %}
-                        <div>
+                    </div>
+                    <div class="user-card-footer">
                             <a href="/tools/{{tool.tool_id}}/edit"><i class="fas fa-edit"></i></a>
                             <a href="*"><i class="fab fa-facebook-f"></i></a>
                             <a href="*"><i class="fab fa-twitter"></i></a>
                             <a href="*"><i class="fab fa-instagram"></i></i></a>
-                        </div>
                     </div>
+                    
                 </div>
             </div>
             {% endfor %}

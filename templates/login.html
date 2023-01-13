@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% block head %}{% endblock %}
 {% block body %}
-<h2>Create an Account</h2>
+
 <!-- <form action="/users/new" method="POST">
     <p>
         First Name <input type="text" name="fname"/ >
@@ -32,25 +32,25 @@
 
 <div class="login-form">
     <div id="app"> </div>
-    <div >
-        <h2>Log In</h2>
-        <form action="/login" method="POST">
+    <div  class="login">
+        <form  class="form-signin" action="/login" method="POST">
+            <h5>SignIn</h5>
             <p> 
                 <input id="email"  type="email" name="email" />
                 <label class="form-label" for="email"> Email </label>
             </p>
             <p>
-                <input id="loginPassword" type="password" name="password" />
-                <label lass="form-label" for="loginPassword">Password </label>
+                <input id="loginPassword" type="password" name="password"/>
+                <label lass="form-label" for="loginPassword">Password</label>
             </p>
-
             <p>
-                <button type="submit" class="btn btn-primary btn-block mb-3">Sign in</button>
-                <!-- <input type="submit" /> -->
+                <!-- <button type="submit" class="btn btn-primary btn-block md-3">Sign in</button> -->
+                <button  class="submit-login" type="submit-login">Sign in</button>
             </p>
         </form>
     </div>
 </div>
+
 
 <!-- <h1>This is happy REACT form</h1> -->
 <!-- <div id ="registration-popup" > </div> -->

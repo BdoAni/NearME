@@ -4,7 +4,7 @@
 {% block body %}
 
 
-<h4> Hello {{user.first_name}}! These are all your Reserved Tools!</h4>
+<!-- <h4> Hello {{user.first_name}}! These are all your Reserved Tools!</h4> -->
 
 {% if session.get('user_id') %}
 <div class="container mt-5 p-3 rounded cart">
@@ -13,9 +13,11 @@
             <div class="col-">
                 <div class="product-details">
                     <div class="link-home" >
-                        <a href="/tools" ><i class="fa fa-home" ></i></a>
+                        <a href="/tools" ><i class="fa fa-home" ></i> 
+                            <!-- <p>{{ user.first_name}} These are all your Reserved Tools!</p> -->
+                        </a> 
                     <hr>
-                    <div class="d-flex justify-content-between"><span>You have {{reservations|length}} items in your cart</span>
+                    <div class="d-flex justify-content-between"><span>Hey {{ user.first_name}}! You have {{reservations|length}} items in your cart</span>
                         <div class="d-flex flex-row align-items-center"><span class="text-black-50"></span>
                             <!-- <div class="price ml-4"><span class="mr-1">price</span> -->
                         </div>
@@ -40,28 +42,17 @@
                             </div>
                             <div class="d-flex flex-row align-items-center"><span class="d-block"></span><span
                                     class="d-block ml-5 font-weight-bold">${{res.total}}</span>
-                                <!-- <i class="fa fa-trash-o ml-3 text-black-50"></i> -->
                             </div>
                             <br>
                             <button class="delete-reservation  fa fa-trash mb-1 text-danger" value="{{res.reservation_id}}"></button>
+
+                            <p>{{reservations|length}}</p>
 
                             <a class="check-out" href="/checkout" value="{{res.reservation_id}}">Proceed to checkout
                             </a>
                             <!-- <a class="check-out btn btn-primary" href="/payment/success" value="{{res.reservation_id}}">
                                 Proceed to checkout
                             </a> -->
-
-
-                            <!-- ////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
-                            <!-- <form action="/payment" method="POST">
-                                {% set amount = (res.total * 100) %}
-                                <input type="hidden" name="amount" value="{{amount/100}}">
-                                <script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
-                                data-key="pk_test_51IsWrSDCSJx1xfN2KRMslaOm7pQnj52LZJGEjDGqCF7ofdHSR4mbpUXmDXv9ntRds8kul4pPma49UCsqw84qlzgl00zEQLuYY2"
-                                data-name={{res.tool.tool_name}} data-description={{res.tool.description}}
-                                data-amount={{amount}} data-currency="usd">
-                            </script>
-                            </form> -->
                         </div>
                     </div>
                 {% endfor %}

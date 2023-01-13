@@ -11,62 +11,71 @@
     </div>
     <div class="tool-details">
         <div class="tool-details-div">
-        <h5> {{ tool.tool_name}}</h5>
-        <p>
-            Description: {{ tool.description }}
-        </p>
-        <p>
-            Daily Price: {{ tool.price}}$
-        </p>
-        <p>
-            Location:
-            <a href="http://maps.google.com/maps?q={{tool.user.address}}"> {{tool.user.address}} </a>
-        </p>
-        <p>
-            Posted by: <a href="/users/{{tool.user.user_id}}">{{tool.user.first_name}}</a>
-        </p>
-        <h6> Available Dates: {{tool.availability_start.strftime("%m/%d/%y") }}
-            | {{tool.availability_end.strftime("%m/%d/%y")}}</h6>
+            <h5> {{ tool.tool_name}}</h5>
+            <p>
+                Description: {{ tool.description }}
+            </p>
+            <p>
+                Daily Price: {{ tool.price}}$
+            </p>
+            <p>
+                Location:
+                <a href="http://maps.google.com/maps?q={{tool.user.address}}"> {{tool.user.address}} </a>
+            </p>
+            <p>
+                Posted by: <a href="/users/{{tool.user.user_id}}">{{tool.user.first_name}}</a>
+            </p>
+            <h6> Available Dates: {{tool.availability_start.strftime("%m/%d/%y") }}
+                | {{tool.availability_end.strftime("%m/%d/%y")}}</h6>
         </div>
         <div>
-        {% if session.get('user_id') != tool.user_id %}
-        <h5>
-            Reserve a tool:
-        </h5>
-        <form action="/user/reservation/tool/{{tool.tool_id}}" method="POST">
-            <p>
-                Start Date:<input type="date" name="start_date">
-            </p>
-            <p>
-                End Date:<input type="date" name="end_date">
-            </p>
-            <input type="text" name="price" value="{{tool.price}}">
-            <p>
-                <input type="submit">
-            </p>
-        </form>
+            {% if session.get('user_id') != tool.user_id %}
+            <h5>
+                Reserve a tool:
+            </h5>
+            <form action="/user/reservation/tool/{{tool.tool_id}}" method="POST">
+                <p>
+                    <input id="tool-start-daydit" type="date" name="start_date" />
+                    <label for="tool-start-daydit">Start Date</label>
+                </p>
+                <p>
+                    <input id="tool-end-daydit" type="date" name="end_date" />
+                    <label for="tool-end-daydit">End Date </label>
+                </p>
+                <input type="text" name="price" value="{{tool.price}}" />
+                <label for="tool-price">Price </label>
+                <p>
+                    <input class="submit-button" type="submit" />
+                </p>
+            </form>
         </div>
         <div>
-        <h4>Rate this tool</h4>
-        <form action="/tools/{{tool.tool_id}}/review" method="POST">
-            <div class="rate">
-                <input type="radio" id="star5" name="rating" value="5" />
-                <label for="star5" title="text">5 stars</label>
-                <input type="radio" id="star4" name="rating" value="4" />
-                <label for="star4" title="text">4 stars</label>
-                <input type="radio" id="star3" name="rating" value="3" />
-                <label for="star3" title="text">3 stars</label>
-                <input type="radio" id="star2" name="rating" value="2" />
-                <label for="star2" title="text">2 stars</label>
-                <input type="radio" id="star1" name="rating" value="1" />
-                <label for="star1" title="text">1 star</label>
-            </div>
-            <input class="post" type="text" name="comment" />
-            <button id="submit_review" type="submit" value="submit">Submit</button>
-        </form>
-    </div>
+            <h4>Rate this tool</h4>
+            <form action="/tools/{{tool.tool_id}}/review" method="POST">
+                <div class="rate">
+                    <input type="radio" id="star5" name="rating" value="5" />
+                    <label for="star5" title="text">5 stars</label>
+                    <input type="radio" id="star4" name="rating" value="4" />
+                    <label for="star4" title="text">4 stars</label>
+                    <input type="radio" id="star3" name="rating" value="3" />
+                    <label for="star3" title="text">3 stars</label>
+                    <input type="radio" id="star2" name="rating" value="2" />
+                    <label for="star2" title="text">2 stars</label>
+                    <input type="radio" id="star1" name="rating" value="1" />
+                    <label for="star1" title="text">1 star</label>
+                </div>
+                <input class="post" type="text" name="comment" />
+                <button id="submit_review" type="submit" value="submit">Submit</button>
+                <a href="/tools"><i class="fa fa-home"></i></a>
+            </form>
+        </div>
     </div>
     {% endif %}
+    
+<div>
+    <!-- <a class=" fa fa-trash mb-1 text-danger" href="/tools/delete/{{tool.tool_id}}"></a> -->
+</div>
+
 </div>
 <link rel="stylesheet" href="/static/css/review.css">
 {% endblock %}
