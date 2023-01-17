@@ -8,9 +8,7 @@ function App(){
         setShowForm(false);
     }
     return (<div>
-        {showForm ? <Register hideForm={hideForm} /> : <h5>You successfully created your account, Please login! </h5>
-                   
-        }
+        {showForm ? <Register hideForm={hideForm} /> : <h5 class="reg-text">You successfully created your account, Please login!</h5>}
         </div>)
 }
 
@@ -57,7 +55,7 @@ function Register(props) {
                     <label class="form-label" for="Address">Your Addrress </label>
                 </p>
                 <p>
-                    <input id="userImg"  type="file" name="file" />
+                    <input id="userImg" type="file" name="file" />
                     <label class="form-label" for="userImg"> </label>
                                             
                 </p>      

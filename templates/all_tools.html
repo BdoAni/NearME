@@ -4,8 +4,15 @@
 
 
 {% block body %}
+
 <div class="container mx-auto mt-4">
-    <div class="container">
+    <div class="container-all-tool">
+        <!-- <section>
+                <form action="/search" method="post">
+                    <input type="search" placeholder="What are you looking for?">
+                    <button>Search</button>
+                </form>
+            </section> -->
         <div class="row">
             {% for tool in tools %}
             <div class="col-md-4">
@@ -18,7 +25,7 @@
                     <div class="card-body">
                         <h5 class="card-title"><a href="/tools/{{tool.tool_id}}">
                                 {{tool.tool_name}}</a></h5>
-                        <h6  class="mb-0 font-weight-semibold" >{{tool.price}}$</h6>
+                        <h6  class="mb-0 font-weight-semibold" >{{tool.price}}$ /Per Day</h6>
                         <p class="card-text">{{tool.description}}</p>
                         {% if  tool.reviews %}
                         <div class="reviews">

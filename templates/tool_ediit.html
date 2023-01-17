@@ -3,7 +3,7 @@
 {% block body %}
 
 
-<h3 class="edit-h5">Editing {{tool.tool_name}} </h3>
+<h3 class="edit-h5">Edit Your Listing For: {{tool.tool_name}} </h3>
 <div class="edit-toolcard">
     <form class=" edit-tool" action="/tools/{{tool.tool_id}}/edit" method="POST" enctype="multipart/form-data">
         
@@ -22,7 +22,7 @@
         </p>
         <p>
             <input id="tool-price" type="number" min="1" step="0.01" name="price" value="{{tool.price}}">
-            <label for="tool-price">Price </label>
+            <label for="tool-price">Price/Day </label>
         </p>
         <p>
             <input class="dates" type="date" pattern="mm/dd/yyyy" name="formstart_date"

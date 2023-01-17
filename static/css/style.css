@@ -11,6 +11,17 @@
  #map {
    height: 800px;
    width: 800px;
+   margin-top: 30px;
+
+   border-bottom: 1px #aeaaaa solid;
+   padding: 0 0 5px 0;
+   margin-bottom: 30px
+  }
+.user-dashboard-map-card {
+    display: flex;
+}
+  #map-foruser_dashboard{
+   width: 1600px;
   }
 
   html,
@@ -136,10 +147,24 @@
     color: #8ab4f8;
     /* height: 320px; */
 }
+
+.col-md-4 div:hover{
+        -webkit-background-clip: none !important;
+        border: 1px solid #fff !important;
+        box-shadow: #0c271b;
+        /* text-decoration: underline; */
+}
 .container {
     margin-top: 40px;
+    /* background-color: #d1e7dd; */
+    /* background-color: #d1e7dd;
+    border-radius: 2em; */
 }
-
+.container-all-tool{
+    background-color: #ddedec;
+        border-radius: 1.5em;
+        padding:20px;
+}
 /* //////////////////////////       LOGIN                     ///////////////// */
 
 .form-signin{
@@ -153,16 +178,28 @@
     padding: 20px;
     background-color: #ddedec;
     border-radius: 1.5rem;
+    
+}
+.form-signin h5{
+        text-align: center;
+}
+.form-signin:hover{
+    -webkit-background-clip: none !important;
+        border: 2px solid #fff !important;
+        box-shadow: #eaf4ef;
 }
 .submit-login{
-        background-color: #0d6efd;
-            color: white;
+        background-color: #8c999b;
+          /* .form-signin  color: white; */
             padding: 16px 20px;
             border: none;
             cursor: pointer;
             width: 100%;
             opacity: 0.9;
         border-radius: 1.5rem;
+}
+.form-register h5{
+        text-align: center;
 }
 .submit-login:hover,
 .submit-login:focus {
@@ -181,7 +218,70 @@
         background-color: #ddedec;
         border-radius: 1rem;
 }
+.form-register:hover {
+    -webkit-background-clip: none !important;
+    border: 2px solid #fff !important;
+    box-shadow: #eaf4ef;
+}
 .edit-h5{
     margin: 25px 0 35px 5px;
     text-align: center;
+}
+.reg-text{
+    margin-top: 100px;
+}
+/* .submit-button {
+    color: #fff;
+    background-color: #8c999b;
+    border-color: #8c999b;
+} */
+#tool-name{
+    width: 400px;
+    padding:10px;
+}
+#tool-description{
+    width: 400px;
+    padding: 10px;
+}
+#tool-price{
+    width: 400px;
+    padding: 10px;
+}
+.dates{
+        width: 400px;
+        padding: 10px;
+}
+.edit-image{
+    padding: 40px;
+    margin-top: 30px;
+    margin-right: 30px;
+}
+.edit-tool{
+    margin-top: 30px;
+}
+.edit-toolcard{
+    background-color: #ddedec;
+    border-radius: 2rem;
+    margin-top: 20px;
+}
+
+
+
+/* //////////// */
+.add-tool{
+    margin-left: 35px;
+    padding: 25px;
+}
+#search_tool_name{
+        margin-left: 25%;
+        margin-top: 20px;
+        border-radius: 2em;
+        border: solid 2px;
+        width: 300px;
+}
+#search_tool_submit{
+        width: 100px;
+            height: 40px;
+            border-radius: 2em;
+            background-color: #ea4335;
 }

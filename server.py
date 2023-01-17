@@ -195,7 +195,9 @@ def show_user(user_id):
 @app.route("/tools")
 def all_tools():
     """View all tools."""
-
+    # if not "user_id" in session:
+    #     flash("You must log in to rate a movie.")
+    #     return redirect("/")
     tools= Tool.all_tools() 
     for tool in tools:
         Tool.get_review_by_tool(tool.tool_id)
@@ -230,6 +232,7 @@ def all_tools():
 def show_detail_tool(tool_id):
     """Show details on a particular tool."""
     # getting user_id from the session
+
     user_id=session["user_id"]
     tool=Tool.get_by_id(tool_id)
     # print(f'********************* PRINTING TOOL {tool}')
@@ -547,7 +550,7 @@ def create_checkout_session():
     # import pdb; pdb.set_trace()
     try:
         data = json.loads(request.data)
-        print(f'******************* PRINT data', data)
+        # print(f'******************* PRINT data', data)
         
     # get tool
         tool_id=int(data['tool_id'])
@@ -577,7 +580,6 @@ def create_checkout_session():
         print(f'******************* PRINT E', e)
         return jsonify(error=str(e))
 
-    # return redirect(checkout_session.url, code=303)
 
 
 # ////////////////  delete a reservation by id////////////////////////

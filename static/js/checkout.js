@@ -1,5 +1,5 @@
 'use strict'
-alert("you connected to js") 
+// alert("you connected to js") 
 
 // const checkoutLinks = document.querySelectorAll('.check-out')
 // for (const checkout of checkoutLinks) {

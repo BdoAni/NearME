@@ -65,10 +65,15 @@ body {
     width: 290px;
     height: 580px;
     margin-top: 35px;
-    background: rgb(26, 45, 45); 
+    /* background: rgb(26, 45, 45);  */
+    background-color: #243F3F;
     border: 1px solid #4d4a4b;
-    color: rgba(243, 237, 237, 0.8);
+    color: white;
     margin-bottom: 2rem;
+}
+.card:hover {
+    transform: translateY(-0.5%);
+    box-shadow: 0 2rem 4rem rgba(0, 0, 0, 0.5);
 }
 
 
@@ -84,11 +89,11 @@ body {
 .btn:focus {
     /* background: var(--gradient) !important; */
     -webkit-background-clip: none !important;
-    -webkit-text-fill-color: rgb(210, 232, 226) !important;
+    /* -webkit-text-fill-color: rgb(210, 232, 226) !important; */
     border: 3px solid #fff !important;
     /* box-shadow: rgb(25, 67, 10) 1px 0 10px;  */
     box-shadow:#d1e7dd;
-    text-decoration: underline;
+    text-decoration: none;
 }
 .navbar-brand{
     width: 80px;
@@ -116,10 +121,11 @@ body {
 .tool-details-div{
     border-bottom: 1px #aeaaaa solid;
     padding: 0 0 5px 0;
+    margin-bottom: 30px
 }
 
 .user-dashboard-map-card{
-display: flex;
+/* display: flex; */
 }
 .h3-home-p{
     /* position: relative; */
@@ -148,6 +154,7 @@ display: flex;
 .tool-details-img{
  display: inline-block;
 -ms-flex-direction: column-reverse;
+    /* margin-left: 50px; */
 }
 .text-home-p{
     
@@ -177,6 +184,7 @@ input[type=text] {
     line-height: 40px;
     margin-right: 10px;
     min-width: 25%;
+    width: 300px;
 }
 #email{
     background-color: #fff;
@@ -203,6 +211,7 @@ input[type=text] {
         line-height: 40px;
         margin-right: 10px;
         min-width: 25%;
+        width: 300px;
     }
 #tool-start-daydit{
     background-color: #fff;
@@ -216,6 +225,7 @@ input[type=text] {
         line-height: 40px;
         margin-right: 10px;
         min-width: 25%;
+        width: 300px;
 }
 #tool-end-day{
     background-color: #fff;
@@ -362,6 +372,12 @@ label.radio input:checked+span {
     display: flex;
     
 }
+.tool-info{
+        padding: 20px;
+            /* background-color: #ddedec; */
+            border-radius: 1.5rem;
+            margin-top: 25px;
+}
 .tool-info h5{
         display: grid;
         grid-template-columns: 400px auto;
@@ -381,6 +397,16 @@ label.radio input:checked+span {
     display: grid;
     grid-template-columns: 400px auto;
     padding-top: 25px;
+    /* //// backround color  ////// */
+
+        padding: 20px;
+        background-color: #ddedec;
+        border-radius: 1.5rem;
+        margin-top: 25px;
+        /* margin-left: 50px; */
+}
+.tool-dit-div img{
+    margin-left: 30px;
 }
 .edit-toolcard{
     border-radius: 2px;
@@ -415,9 +441,9 @@ justify-content: space-around;
     border-right-style: none;
     border-left-style:none ;
 }
-#map{
+/* #map{
     margin-top: 40px;
-}
+} */
 .invoice-page{
     display: grid;
     grid-template-columns: auto auto;
@@ -662,23 +688,23 @@ justify-content: space-around;
         justify-content: space-between;
 }
 .check-out{
-        color: #fff;
-            background-color: #007bff;
-            border-color: #007bff;
-            border-radius: 0.3rem;
-            padding: 0.5rem 1rem;
+    color: #fff;
+    background-color: #8c999b;
+    border-color: #8c999b;
+    border-radius: 0.3rem;
+    padding: 0.5rem 1rem;
 }
 .checkout-button{
         color: #fff;
-            background-color: #007bff;
-            border-color: #007bff;
+        background-color: #8c999b;
+            border-color: #8c999b;
             border-radius: 0.3rem;
             padding: 0.5rem 1rem;
 }
 .submit-button {
     color: #fff;
-        background-color: #007bff;
-        border-color: #007bff;
+    background-color: #8c999b;
+        border-color: #8c999b;
         border-radius: 0.3rem;
         padding: 0.5rem 1rem;
         width: 30%;
@@ -686,9 +712,13 @@ justify-content: space-around;
 }
 
 #submit_review{
-    color: #fff;
-        background-color: #007bff;
-        border-color: #007bff;
-        border-radius: 0.3rem;
-        padding: 0.5rem 1rem;
+    background-color: #8c999b;
+    border-color: #8c999b;
+    border-radius: 0.3rem;
+    padding: 0.5rem 1rem;
+    color:white;
+}
+.fa-home i{
+/* background-color: #8c999b; */
+    border-color: #8c999b;
 }

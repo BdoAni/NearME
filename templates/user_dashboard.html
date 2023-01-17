@@ -4,7 +4,10 @@
 {% block body %}
 <!-- <h1> Hello {{user.first_name}}! </h1> -->
 <div class="user-dashboard-map-card">
-{{ search_tools()}}
+    <div id="map-foruser_dashboard">
+        {{ search_tools()}}
+
+    </div>
 <div class="container mx-auto mt-4">
     <div class="container">
         <div  class="row">
@@ -47,6 +50,7 @@
                     
                 </div>
             </div>
+
             {% endfor %}
         </div>
     </div>
