@@ -37,7 +37,7 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                     <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="/tools">Tools</a>
+                        <a class="nav-link active" aria-current="page" href="/tools">All Tools</a>
                     </li>
                     {% if "user_id" in session %}
                     <li class="nav-item">
@@ -50,7 +50,7 @@
                         <a class="nav-link active" aria-current="page" href="/logout">Logout</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="/tools/new"> Add tool</a>
+                        <a class="nav-link active" aria-current="page" href="/tools/new"> Add a Tool</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link active" aria-current="page" href="/users/{{session['user_id'] }}"> {{ session['first_name'] }}</a>
@@ -70,9 +70,9 @@
         </div>
     </nav>
     {% for msg in get_flashed_messages() %}
-    <p>
+    <h4>
         {{ msg }}
-    </p>
+    </h4>
     {% endfor %}
 
     {% block body %}

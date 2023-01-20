@@ -2,7 +2,6 @@
 {% block title %}NearME all tools page{% endblock %}
 <!-- <link rel="stylesheet" href="/static/css/card.css"> -->
 
-
 {% block body %}
 
 <div class="container mx-auto mt-4">
@@ -48,9 +47,20 @@
                         {% if session.get('user_id') != tool.user_id %}
                         <a href="/tools/{{tool.tool_id}}" class="btn mr-2"><i class="fa fa-shopping-cart"></i>
                             Reserve</a>
+                        {% else %}
+
+                        <br>
+                        <br>
+                        <div class="user-card-footer">
+                            <a href="/tools/{{tool.tool_id}}/edit"><i class="fas fa-edit"></i></a>
+                            <a href="*"><i class="fab fa-facebook-f"></i></a>
+                            <a href="*"><i class="fab fa-twitter"></i></a>
+                            <a href="*"><i class="fab fa-instagram"></i></i></a>
+                        </div>
                         {% endif %}
                         {% for reservation in tool.reservations %}
                         {% if session.get('user_id') == reservation.user.user_id %}
+                        
                         <!-- <div>
                             <h3>You have rented this tool before!</h3>
                         </div> -->

@@ -8,7 +8,7 @@
     <form class=" edit-tool" action="/tools/{{tool.tool_id}}/edit" method="POST" enctype="multipart/form-data">
         
         <div>
-            <a href="/tools"><i class="fa fa-home"></i></a>
+            <a href="/dashboard"><i class="fa fa-home"></i></a>
             <a class=" fa fa-trash mb-1 text-danger" href="/tools/delete/{{tool.tool_id}}"></a>
         </div>
 
@@ -34,6 +34,7 @@
             <label for="tool-end-day">End Date: </label>
         </p>
         <p>
+            
             <input type="file" id="file" name="file">
             <label for="tool-end-day"> </label>
         </p>

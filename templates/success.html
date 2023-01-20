@@ -20,8 +20,8 @@
                             <div class="intro">
                                 Hi <strong>{{order.user.first_name}} {{order.user.last_name}}</strong>,
                                 <br>
-                                This is the receipt for a payment of <strong>${{order.total}}</strong> (USD) for your {{
-                                reservations[0].tool.tool_name }}
+                                This is the receipt for a payment of <strong>${{order.total}}</strong> (USD) for: <a href="/tools/{{reservations[0].tool.tool_id}}">
+                                {{ reservations[0].tool.tool_name }}</a>
                             </div>
                             <div class="payment-info">
                                 <div class="row">

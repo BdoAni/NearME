@@ -95,7 +95,7 @@ def register_user_in_react():
     email = data.get("email")
     password = data.get("password")
     address = data.get("address")
-    # print(f'******************* PRINTING request.files {request.files}')
+   
     
     profile_image = request.files['file']  
     # print(f'******************* PRINTING profile_image {profile_image}')
@@ -177,8 +177,14 @@ def show_user_dashboard():
     user_id=session["user_id"]
     
     user=User.get_by_id(user_id)
+    
+    
+    tools= Tool.all_tools() 
+    for tool in tools:
+        Tool.get_review_by_tool(tool.tool_id)
+    
 
-    return render_template("user_dashboard.html", user=user, GOOGLEMAP_KEY=GOOGLEMAP_KEY)
+    return render_template("user_dashboard.html", user=user, tools=tools, GOOGLEMAP_KEY=GOOGLEMAP_KEY)
 
 #//////////////////////////// display a user ////////////////////
 @app.route("/users/<user_id>")
@@ -188,26 +194,21 @@ def show_user(user_id):
     user=User.get_by_id(user_id)
 
     return render_template("user_details.html", user=user)
-# ////////////////////////// display one user with all information ////
+
 
 
 # ///////////////////////////////////// Getting All Tools /////////////////////////////
 @app.route("/tools")
 def all_tools():
     """View all tools."""
-    # if not "user_id" in session:
-    #     flash("You must log in to rate a movie.")
-    #     return redirect("/")
+
     tools= Tool.all_tools() 
     for tool in tools:
         Tool.get_review_by_tool(tool.tool_id)
     
     num_five_star_ratings=db.session.query((Review.rating)).filter(Review.rating==5).count()
-    # print(f'********************* PRINTING TOOL 5 STAR rating { num_five_star_ratings}')
     num_four_star_ratings=db.session.query((Review.rating)).filter(Review.rating==4).count()
-    # print(f'********************* PRINTING TOOL 4 STAR rating { num_four_star_ratings}')
     num_three_star_ratings=db.session.query((Review.rating)).filter(Review.rating==3).count()
-    # print(f'********************* PRINTING TOOL 3 STARs rating { num_three_star_ratings}')
     num_two_star_ratings=db.session.query((Review.rating)).filter(Review.rating==2).count()
     num_one_star_ratings=db.session.query((Review.rating)).filter(Review.rating==1).count()
 
@@ -232,6 +233,9 @@ def all_tools():
 def show_detail_tool(tool_id):
     """Show details on a particular tool."""
     # getting user_id from the session
+    if not "user_id" in session:
+        flash("Please Login/Register for the best user experience")
+        return redirect("/")
 
     user_id=session["user_id"]
     tool=Tool.get_by_id(tool_id)
@@ -268,7 +272,7 @@ def create_review(tool_id):
     """Create a new rating for the tool."""
     
     if not "user_id" in session:
-        flash("You must log in to rate a movie.")
+        flash("Please Login/Register for the best user experience")
         return redirect("/")
     
     user_id=session["user_id"]
@@ -414,7 +418,7 @@ def delete_tool_by_id(tool_id):
 # ////////////////////////////// Search in javascript ////////////////////////
 @app.route("/search")
 def searchtools():
-    tools = Tool.all_tools()
+    tools = Tool.all_tools() 
     
     search_term = request.args.get("searched")
     # import pdb; pdb.set_trace() 
@@ -469,10 +473,7 @@ def reservation_tools():
         return redirect("/")
     user_id=session["user_id"]
     user=User.get_by_id(user_id)
-    # for res in user.reservations:
-        # print(f'********************** USER RESERVATIONS: {res.tool}')
-        # print(f'********************** USER RESERVATIONS: {res.tool}')
-    # reservations = Reservation.all_reservations()
+
    
     return render_template( 'reservation.html', user=user, reservations = user.reservations)
 
@@ -545,12 +546,8 @@ def create_checkout_session():
     user_id=session["user_id"]
     user=User.get_by_id(user_id)
     
-
-    # tools = Tool.all_tools()
-    # import pdb; pdb.set_trace()
     try:
         data = json.loads(request.data)
-        # print(f'******************* PRINT data', data)
         
     # get tool
         tool_id=int(data['tool_id'])

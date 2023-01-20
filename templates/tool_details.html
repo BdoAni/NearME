@@ -74,8 +74,10 @@
 
         {% else %}
         <div>
-            <a href="/tools"><i class="fa fa-home"></i></a>
+            <a href="/dashboard"><i class="fa fa-home"></i></a>
+            <a href="/tools/{{tool.tool_id}}/edit"><i class="fas fa-edit"></i></a>
             <a class=" fa fa-trash mb-1 text-danger" href="/tools/delete/{{tool.tool_id}}"></a>
+
         </div>
         {% endif %}
     </div>
