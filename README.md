@@ -1,4 +1,5 @@
-# NearME:App for Renting Garage Tools Near You!
+# NearME: The App for Renting Garage Tools Near You!
+
 ![NearME](https://media.giphy.com/media/S1Orhp94IIpLbjLMjy/giphy.gif)
 
 
