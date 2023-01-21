@@ -1,4 +1,4 @@
-# NearME: A meditation app
+# NearME:App for Renting Garage Tools Near You!
 ![NearME](https://media.giphy.com/media/TeG2kklmwHvWHyZ1OW/giphy.gif)
 
 
