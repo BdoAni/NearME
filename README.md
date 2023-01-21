@@ -1,5 +1,5 @@
 # NearME:App for Renting Garage Tools Near You!
-![NearME](https://media.giphy.com/media/TeG2kklmwHvWHyZ1OW/giphy.gif)
+![NearME](https://media.giphy.com/media/S1Orhp94IIpLbjLMjy/giphy.gif)
 
 
 
