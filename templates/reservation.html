@@ -4,7 +4,6 @@
 {% block body %}
 
 
-<!-- <h4> Hello {{user.first_name}}! These are all your Reserved Tools!</h4> -->
 
 {% if session.get('user_id') %}
 <div class="container mt-5 p-3 rounded cart">
@@ -14,12 +13,10 @@
                 <div class="product-details">
                     <div class="link-home" >
                         <a href="/dashboard" ><i class="fa fa-home" ></i> 
-                            <!-- <p>{{ user.first_name}} These are all your Reserved Tools!</p> -->
                         </a> 
                     <hr>
                     <div class="d-flex justify-content-between"><span>Hey {{ user.first_name}}! You have {{reservations|length}} items in your cart</span>
                         <div class="d-flex flex-row align-items-center"><span class="text-black-50"></span>
-                            <!-- <div class="price ml-4"><span class="mr-1">price</span> -->
                         </div>
                     </div>
                 </div>

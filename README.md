@@ -20,6 +20,7 @@ tools and reducing the carbon emissions from manufacturing and supply chain of n
 <hr>
 
 **All Tools**
+
 <img src="https://media.giphy.com/media/laWABsDZiBUyyJRFt5/giphy.gif">
 
 
@@ -32,9 +33,11 @@ tools and reducing the carbon emissions from manufacturing and supply chain of n
 <img src="https://media.giphy.com/media/eqlEe6wk0xCDXZGNBR/giphy.gif">
 
 **Reserve a Tool**
+
 <img src="https://media.giphy.com/media/bVC1bmJDKUmK3CGQCu/giphy.gif">
 
 **Checkout a Tool**
+
 <img src="https://media.giphy.com/media/LsXTpelwPesBNq2lk6/giphy.gif">
 
 ## Tech Stack

@@ -239,18 +239,13 @@ def show_detail_tool(tool_id):
 
     user_id=session["user_id"]
     tool=Tool.get_by_id(tool_id)
-    # print(f'********************* PRINTING TOOL {tool}')
     reviews=Tool.get_review_by_tool(tool_id)
     num_five_star_ratings=db.session.query((Review.rating)).filter(Review.rating==5).count()
-    # print(f'********************* PRINTING TOOL 5 STAR rating { num_five_star_ratings}')
     num_four_star_ratings=db.session.query((Review.rating)).filter(Review.rating==4).count()
-    # print(f'********************* PRINTING TOOL 4 STAR rating { num_four_star_ratings}')
     num_three_star_ratings=db.session.query((Review.rating)).filter(Review.rating==3).count()
-    # print(f'********************* PRINTING TOOL 3 STARs rating { num_three_star_ratings}')
     num_two_star_ratings=db.session.query((Review.rating)).filter(Review.rating==2).count()
     num_one_star_ratings=db.session.query((Review.rating)).filter(Review.rating==1).count()
-    # print(f'********************* PRINTING TOOL 2 STARs rating { num_two_star_ratings}')
-    # print(f'********************* PRINTING TOOL 1 STARs rating { num_one_star_ratings}')
+
     five_star=(5 * num_five_star_ratings)
     four_star=(4 * num_four_star_ratings )
     three_star=(3 * num_three_star_ratings)
@@ -371,9 +366,7 @@ def edit_tool_by_id(tool_id):
     price=request.form.get("price")
     availability_start=request.form.get("formstart_date")
     availability_end=request.form.get("formend_date")
-    # print(f'********************THIS IS REQUEST>FILES---{request.files}')
     tool_image=request.files.get("file")
-    # print(f'********************THIS IS TOOL IMAGE---{tool_image}')
     
     tool.tool_name=tool_name
     tool.description=description
@@ -457,7 +450,6 @@ def create_tool_reservation(tool_id):
     number_of_days=(((end_date - start_date).days)+1)
     
     total = float(number_of_days * price)
-    # print(f'***************************** This is TOTAL---> {total}')
     
     reservation = Reservation.create(start_date, end_date, price, total, user_id, tool_id )
     db.session.add(reservation)
