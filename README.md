@@ -1,9 +1,11 @@
-# NearME: A meditation app
-![NearME](https://media.giphy.com/media/TeG2kklmwHvWHyZ1OW/giphy.gif)
+# NearME: The App for Renting Garage Tools Near You!
+
+![NearME](https://media.giphy.com/media/S1Orhp94IIpLbjLMjy/giphy.gif)
 
 
 
-## Table of Contents
+## Table of Contents:
+
 - [Project Description](https://github.com/BdoAni/NearMe#project-description)
 - [Tech Stack](https://github.com/BdoAni/NearMe#tech-stack)
 - [Features](https://github.com/BdoAni/NearMe#features)
@@ -11,11 +13,9 @@
 - [Installation](https://github.com/BdoAni/NearMe#installation)
 
 
-## Project Description
-NearMe is a shared economy application for construction tool rentals.
-NearMe is an online marketplace allowing tool owners to rent out their tools to nearby renters, from hammers and wrenches to concrete mixers and air compressors. The primary benefits of the app will be rental income for the tool owners and lower cost of using the tools for the renters (who could simply pay for rental instead of buying brand new tools). 
-The app will also make a positive sustainability impact - increasing the efficiency of using construction 
-tools and reducing the carbon emissions from manufacturing and supply chain of new tools.
+## Project Description:
+
+NearMe is a shared economy application for garage tool rentals. It is an online marketplace allowing tool owners to rent out their tools to nearby renters, from hammers and wrenches to concrete mixers and air compressors. The primary benefits of the app will be rental income for the tool owners and lower cost of using the tools for the renters (who could simply pay for rental instead of buying brand new tools).The app will also make a positive sustainability impact - increasing the efficiency of using construction tools and reducing the carbon emissions from manufacturing and supply chain of new tools.
 
 <hr>
 
@@ -40,7 +40,8 @@ tools and reducing the carbon emissions from manufacturing and supply chain of n
 
 <img src="https://media.giphy.com/media/LsXTpelwPesBNq2lk6/giphy.gif">
 
-## Tech Stack
+## Tech Stack:
+
 - Python
 - Flask
 - Jinja2
@@ -57,6 +58,7 @@ tools and reducing the carbon emissions from manufacturing and supply chain of n
 
 
 APIs:
+
 - [Cloudinary API](https://cloudinary.com/documentation/image_upload_api_reference)
 - [Stripe API](https://stripe.com/docs/api/payment_methods)
 - [Google Maps Geocoding API](https://developers.google.com/maps/documentation/javascript/geocoding)
@@ -65,24 +67,26 @@ APIs:
 
 
 
-## Features
+## Features:
+
 - **Create an account, login / logout, and delete account**
-- **Searching and browsing garage tools available for rentals in their location zip code**
-- **Journal page where all past reflections can be reviewed and deleted if chosen**
-- **Create and publish listings to rent out their owned garage tools, update and delete listing**
-- **Checkout with your purches by using Stripe SandBox**
-- **Provide a rating and reviews for their completed tool rentals**
+- **Search and browse garage tools available for rentals in your location zip code**
+- **Create and publish listings to rent out your owned garage tools, update and delete listing**
+- **Checkout with your debit/Credit Card via Stripe Payments**
+- **Provide a rating and reviews for your completed tool rentals**
 
 
-## Possible Future Features
-- **Create automated description for their tool listings by using image recognition AI**
-- **Be able to communicate with each other via online chat by using Socket.io**
-- **Be able to buy insurance for their tool rentals**
+## Possible Future Features:
+
+- **Create automated description for your tool listings by using image recognition AI**
+- **Be able to communicate with other users via online chat by using Socket.io**
+- **Be able to buy insurance for your tool rentals**
 - **Be able to use Hub Box to a self-service delivery location to drop and return tools at any convenient time**
 
 
 
 ## Installation
+
 To run NearMe locally on your computer:
 1. **Clone repository to your local computer**
 2. **Activate virtual environment**
@@ -110,17 +114,16 @@ To run NearMe locally on your computer:
     export ENDPOINTSECRET_KEY=""
     ```
 
-6. **In `server.py`, under flow, change the 'redirect_uri' to http://localhost:5000**
-7. **Read the key variables into your shell**
+6. **Read the key variables into your shell**
   ```
   $ source secrets.sh
   ```
-8. **Create the database**
+7. **Create the database**
   ```
   $ python3 seed_database.py
   ```
-9. **Start up the Flask server**
+8. **Start up the Flask server**
   ```
   $ python3 server.py
   ```
-10. **Go to http://localhost:5000 in your browser and have fun with NearMe!**
+9. **Go to http://localhost:5000 in your browser and have fun with NearMe!**
