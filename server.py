@@ -203,61 +203,28 @@ def all_tools():
     """View all tools."""
 
     tools= Tool.all_tools() 
-    for tool in tools:
-        Tool.get_review_by_tool(tool.tool_id)
-    
-    num_five_star_ratings=db.session.query((Review.rating)).filter(Review.rating==5).count()
-    num_four_star_ratings=db.session.query((Review.rating)).filter(Review.rating==4).count()
-    num_three_star_ratings=db.session.query((Review.rating)).filter(Review.rating==3).count()
-    num_two_star_ratings=db.session.query((Review.rating)).filter(Review.rating==2).count()
-    num_one_star_ratings=db.session.query((Review.rating)).filter(Review.rating==1).count()
+    # for tool in tools:
+    #     review = Tool.get_review_by_tool(tool.tool_id)
+        # star_avg=tool.get_avg_review_of_tool()
+        # tool.star_avg = star_avg
 
-    five_star=(5 * num_five_star_ratings)
-    four_star=(4 * num_four_star_ratings )
-    three_star=(3 * num_three_star_ratings)
-    two_star=(2 * num_two_star_ratings)
-    rating_stars=((
-        five_star + four_star + 
-        three_star + two_star + 
-        num_one_star_ratings)/(num_five_star_ratings +
-                                  num_four_star_ratings +
-                                  num_three_star_ratings +
-                                  num_two_star_ratings +
-                                  num_one_star_ratings))
-    star_avg=Tool.get_avg_review_of_tool(tool)
-
-    return render_template("all_tools.html", tools=tools, rating_stars=rating_stars, star_avg=star_avg)
+    return render_template("all_tools.html", tools=tools)
 
 # ///////////////////////////////////// tool detail //////////////////////////////////////
 @app.route("/tools/<tool_id>")
 def show_detail_tool(tool_id):
     """Show details on a particular tool."""
     # getting user_id from the session
-    if not "user_id" in session:
-        flash("Please Login/Register for the best user experience")
-        return redirect("/")
+    # if not "user_id" in session:
+    #     flash("Please Login/Register for the best user experience")
+    #     return redirect("/")
 
-    user_id=session["user_id"]
+    # user_id=session["user_id"]
     tool=Tool.get_by_id(tool_id)
-    reviews=Tool.get_review_by_tool(tool_id)
-    num_five_star_ratings=db.session.query((Review.rating)).filter(Review.rating==5).count()
-    num_four_star_ratings=db.session.query((Review.rating)).filter(Review.rating==4).count()
-    num_three_star_ratings=db.session.query((Review.rating)).filter(Review.rating==3).count()
-    num_two_star_ratings=db.session.query((Review.rating)).filter(Review.rating==2).count()
-    num_one_star_ratings=db.session.query((Review.rating)).filter(Review.rating==1).count()
-
-    five_star=(5 * num_five_star_ratings)
-    four_star=(4 * num_four_star_ratings )
-    three_star=(3 * num_three_star_ratings)
-    two_star=(2 * num_two_star_ratings)
-    rating_stars=((
-        five_star + four_star + 
-        three_star + two_star + 
-        num_one_star_ratings)/(num_five_star_ratings +
-                                  num_four_star_ratings +
-                                  num_three_star_ratings +
-                                  num_two_star_ratings +
-                                  num_one_star_ratings))
+    # reviews=Tool.get_review_by_tool(tool_id)
+    # star_avg=tool.get_avg_review_of_tool()
+    # tool.star_avg = star_avg
+   
     return render_template("tool_details.html", tool=tool)
 
 
@@ -465,9 +432,13 @@ def reservation_tools():
         return redirect("/")
     user_id=session["user_id"]
     user=User.get_by_id(user_id)
-
+    
+    reservations=[]
+    for reservation in user.reservations:
+        if not reservation.processed:
+            reservations.append(reservation)
    
-    return render_template( 'reservation.html', user=user, reservations = user.reservations)
+    return render_template( 'reservation.html', user=user, reservations = reservations)
 
 
 
@@ -487,8 +458,12 @@ def checkout():
         return redirect("/")
     user_id=session["user_id"]
     user=User.get_by_id(user_id)
+    reservations=[]
+    for reservation in user.reservations:
+        if not reservation.processed:
+            reservations.append(reservation)
                     
-    return render_template('/checkout.html', reservations=user.reservations, stripe_key=stripe_keys['STRIPEPAYMENTS_KEY'])
+    return render_template('/checkout.html',  reservations = reservations, stripe_key=stripe_keys['STRIPEPAYMENTS_KEY'])
 
 # /////////////////////////////////// Checkout STRIPE /////////////////////////
 @app.route("/payment",  methods=["POST"])
@@ -522,10 +497,16 @@ def success_forms():
     user=User.get_by_id(user_id)
 
     addresses=[]
+    reservations=[]
     for reservation in user.reservations:
-        addresses.append(reservation.tool.user.address)
+        if not reservation.processed:
+            addresses.append(reservation.tool.user.address)
+            reservation.processed_update()
+            db.session.add(reservation)
+            db.session.commit()
+            reservations.append(reservation)
 
-    return render_template('success.html', user=user,  reservations=user.reservations, addresses=addresses, GOOGLEMAP_KEY=GOOGLEMAP_KEY )
+    return render_template('success.html', user=user,  reservations=reservations, addresses=addresses, GOOGLEMAP_KEY=GOOGLEMAP_KEY )
 
 # ////////////////////////////////////////////// POST CHECKOUT SESSION///////////////////////
 
@@ -599,4 +580,4 @@ def add_user_img_record(img_url):
     
 if __name__ == "__main__":
     connect_to_db(app)
-    app.run(host="0.0.0.0")
+    app.run(host="127.0.0.1", port = 5000, debug=True)

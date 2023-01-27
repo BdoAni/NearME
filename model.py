@@ -106,29 +106,7 @@ class Tool(db.Model):
         """this is getting reviews for tool by one user """
         tool=self.get_by_id(tool_id)
         reviews=tool.reviews
-        # num_five_star_ratings=db.session.query((reviews)).filter(Review.rating==5).count()
-        # # print(f'********************* PRINTING TOOL 5 STAR rating { num_five_star_ratings}')
-        # num_four_star_ratings=db.session.query((reviews)).filter(reviews.rating==4).count()
-        # # print(f'********************* PRINTING TOOL 4 STAR rating { num_four_star_ratings}')
-        # num_three_star_ratings=db.session.query((reviews)).filter(reviews.rating==3).count()
-        # # print(f'********************* PRINTING TOOL 3 STARs rating { num_three_star_ratings}')
-        # num_two_star_ratings=db.session.query((reviews)).filter(reviews.rating==2).count()
-        # num_one_star_ratings=db.session.query((reviews)).filter(reviews.rating==1).count()
-        # # print(f'********************* PRINTING TOOL 2 STARs rating { num_two_star_ratings}')
-        # # print(f'********************* PRINTING TOOL 1 STARs rating { num_one_star_ratings}')
-        # five_star=(5 * num_five_star_ratings)
-        # four_star=(4 * num_four_star_ratings )
-        # three_star=(3 * num_three_star_ratings)
-        # two_star=(2 * num_two_star_ratings)
-        # rating_stars=math.ceil((
-        #     five_star + four_star + 
-        #     three_star + two_star + 
-        #     num_one_star_ratings)/(num_five_star_ratings +
-        #                             num_four_star_ratings +
-        #                             num_three_star_ratings +
-        #                             num_two_star_ratings +
-        #                             num_one_star_ratings))        
-        # review_by_user= reviews.query.filter_by(user_id == user_id).first()
+
         return (reviews)
     
     
@@ -159,6 +137,7 @@ class Reservation(db.Model):
     start_date = db.Column(db.DateTime(timezone=True))
     end_date = db.Column(db.DateTime(timezone=True))
     price = db.Column(db.Numeric(6,2), nullable=False)
+    processed = db.Column(db.Boolean(), nullable=False)
     total = db.Column(db.Numeric(6,2), nullable=False)
     created_at = db.Column(db.DateTime(timezone=True))
     updated_at = db.Column(db.DateTime(timezone=True))
@@ -184,9 +163,14 @@ class Reservation(db.Model):
             user_id = user_id,
             tool_id = tool_id,
             created_at = now,
-            updated_at = now
+            updated_at = now,
+            processed = False
         )
         return new_reservation
+    
+    def processed_update(self):
+        self.processed=True
+        
 
     @classmethod
     def all_reservations(self):
