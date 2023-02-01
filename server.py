@@ -33,6 +33,14 @@ stripe_keys = {
 }
 stripe.api_key=os.environ['ENDPOINTSECRET_KEY']
 
+@app.before_request
+def redirect_to_secure():
+    if request.headers.get('X-Forwarded-Proto') != 'https' and request.url.startswith('http://'):
+        url = request.url.replace('http://', 'https://', 1)
+        code = 301
+        return redirect(url, code=code)
+
+
 
 @app.route('/')
 def homepage():
@@ -580,4 +588,6 @@ def add_user_img_record(img_url):
     
 if __name__ == "__main__":
     connect_to_db(app)
-    app.run(host="127.0.0.1", port = 5000, debug=True)
+    # app.run(host="127.0.0.1", port = 5000, debug=True)
+    app.run()
+    

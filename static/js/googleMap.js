@@ -43,7 +43,10 @@ function showToolsOnMap() {
         ()=>{
             alert('Your geolocation is OFF, turn On!')
         }
+    },error=>{
+        console.error(error)
     })
+
 };
 // const title = document.createElement('a').setAttribute('href', `/tools/${tool_id}`)
 
