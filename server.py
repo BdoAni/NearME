@@ -589,5 +589,5 @@ def add_user_img_record(img_url):
 if __name__ == "__main__":
     connect_to_db(app)
     # app.run(host="127.0.0.1", port = 5000, debug=True)
-    app.run()
+    app.run(host="https://fitproximity.com/")
     
